@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Payments — ORM Flooring & Services LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://js.stripe.com/v3/"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--white:#fafaf8;--cream:#f2ede6;--gold:#c9a84c;--gold-light:#e8d5a3;--gray:#8a8880;--dark:#1a1a18;--green:#27ae60;--red:#c0392b}
+body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--black);min-height:100vh}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
+.nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:600;color:var(--black)}
+.nav-logo span{color:var(--gold)}
+.nav-cta{background:var(--black);color:var(--white);padding:0.6rem 1.4rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none}
+
+/* PAGE HEADER */
+.page-header{padding:9rem 3rem 4rem;background:var(--dark);text-align:center}
+.page-eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.page-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.2rem,4vw,3.5rem);font-weight:300;color:var(--white);line-height:1.1}
+.page-title em{font-style:italic;color:var(--gold-light)}
+.page-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-top:0.8rem}
+
+/* TRUST BADGES */
+.trust-bar{background:var(--cream);padding:1.2rem 3rem;display:flex;justify-content:center;gap:3rem;flex-wrap:wrap;border-bottom:1px solid rgba(0,0,0,0.06)}
+.trust-item{display:flex;align-items:center;gap:0.5rem;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray)}
+.trust-item span{font-size:1rem}
+
+/* MAIN */
+.payment-wrap{max-width:640px;margin:0 auto;padding:4rem 2rem 6rem}
+
+/* TABS */
+.tabs{display:grid;grid-template-columns:1fr 1fr;margin-bottom:2.5rem;border:1px solid rgba(0,0,0,0.1)}
+.tab-btn{padding:1rem;font-family:"DM Sans",sans-serif;font-size:0.8rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:transparent;border:none;cursor:pointer;color:var(--gray);transition:all 0.2s;border-right:1px solid rgba(0,0,0,0.1)}
+.tab-btn:last-child{border-right:none}
+.tab-btn.active{background:var(--black);color:var(--white)}
+.tab-btn .tab-icon{display:block;font-size:1.2rem;margin-bottom:0.3rem}
+
+/* PANELS */
+.panel{display:none}
+.panel.active{display:block}
+
+/* FORM STYLES */
+.panel-title{font-family:"Cormorant Garamond",serif;font-size:1.6rem;font-weight:300;margin-bottom:0.4rem}
+.panel-desc{font-size:0.82rem;color:var(--gray);margin-bottom:2rem;line-height:1.6}
+.form-group{margin-bottom:1.2rem}
+.form-group label{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;font-weight:500}
+.form-group input,.form-group select{width:100%;font-family:"DM Sans",sans-serif;font-size:0.9rem;padding:0.85rem 1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white);color:var(--black);outline:none;transition:border-color 0.2s;-webkit-appearance:none;border-radius:0}
+.form-group input:focus,.form-group select:focus{border-color:var(--gold)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+
+/* AMOUNT DISPLAY */
+.amount-breakdown{background:var(--cream);padding:1.5rem;margin-bottom:1.5rem;display:none}
+.amount-breakdown.visible{display:block}
+.breakdown-row{display:flex;justify-content:space-between;align-items:center;padding:0.4rem 0;font-size:0.85rem}
+.breakdown-row:not(:last-child){border-bottom:1px solid rgba(0,0,0,0.06)}
+.breakdown-row.total{font-weight:500;padding-top:0.8rem;margin-top:0.4rem;border-top:2px solid rgba(0,0,0,0.1) !important;font-size:1rem}
+.breakdown-label{color:var(--gray)}
+.breakdown-val{color:var(--black);font-weight:500}
+.breakdown-val.highlight{color:var(--gold);font-size:1.1rem}
+.deposit-badge{display:inline-block;background:var(--gold);color:var(--black);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.2rem 0.6rem;margin-left:0.5rem;font-weight:600}
+
+/* STRIPE CARD */
+.card-section{margin-bottom:1.5rem}
+.card-section label{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;font-weight:500}
+#card-element{padding:0.9rem 1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white);transition:border-color 0.2s}
+#card-element.StripeElement--focus{border-color:var(--gold)}
+#card-element-balance{padding:0.9rem 1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white)}
+#card-element-balance.StripeElement--focus{border-color:var(--gold)}
+#card-errors,#card-errors-balance{color:var(--red);font-size:0.78rem;margin-top:0.5rem;min-height:1rem}
+
+/* SUBMIT BTN */
+.pay-btn{width:100%;padding:1.1rem;background:var(--black);color:var(--white);font-family:"DM Sans",sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.1em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;margin-top:0.5rem;display:flex;align-items:center;justify-content:center;gap:0.6rem}
+.pay-btn:hover{background:var(--gold);color:var(--black)}
+.pay-btn:disabled{opacity:0.5;cursor:not-allowed}
+.pay-btn .spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+.pay-btn:disabled .spinner{display:block}
+
+/* SUCCESS */
+.success-box{text-align:center;padding:3rem 2rem;background:rgba(39,174,96,0.05);border:1px solid rgba(39,174,96,0.2);display:none}
+.success-box.visible{display:block}
+.success-icon{font-size:3rem;margin-bottom:1rem}
+.success-box h3{font-family:"Cormorant Garamond",serif;font-size:1.8rem;font-weight:300;margin-bottom:0.6rem;color:var(--green)}
+.success-box p{font-size:0.85rem;color:var(--gray);line-height:1.7}
+.success-box .success-amount{font-size:2rem;font-weight:600;color:var(--black);margin:1rem 0}
+
+/* NOTE */
+.pay-note{font-size:0.72rem;color:var(--gray);text-align:center;margin-top:1rem;line-height:1.6}
+.pay-note a{color:var(--gold);text-decoration:none}
+
+/* DIVIDER */
+.section-divider{height:1px;background:rgba(0,0,0,0.08);margin:2rem 0}
+
+/* FOOTER */
+footer{background:var(--black);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:"Cormorant Garamond",serif;font-size:1.1rem;color:var(--white)}
+.footer-logo span{color:var(--gold)}
+footer p{font-size:0.72rem;color:rgba(255,255,255,0.25)}
+
+/* WA */
+.wa-btn{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:200;transition:transform 0.2s}
+.wa-btn:hover{transform:scale(1.1)}
+.wa-btn svg{width:28px;height:28px;fill:white}
+
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:640px){
+  nav{padding:1rem 1.5rem}
+  .page-header{padding:7rem 1.5rem 3rem}
+  .trust-bar{gap:1.5rem;padding:1rem 1.5rem}
+  .payment-wrap{padding:2.5rem 1.2rem 4rem}
+  .form-row{grid-template-columns:1fr}
+}
+
+.nav-logo-img{height:38px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
+@keyframes logoSlide{to{opacity:1;transform:translateX(0)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC"></a>
+  <a href="tel:+13859557472" class="nav-cta">📞 Call Us</a>
+</nav>
+
+<div class="page-header">
+  <p class="page-eyebrow">Secure Payments</p>
+  <h1 class="page-title">Pay your <em>invoice</em></h1>
+  <p class="page-sub">Deposits & final balances — powered by Stripe</p>
+</div>
+
+<div class="trust-bar">
+  <div class="trust-item"><span>🔒</span> SSL Encrypted</div>
+  <div class="trust-item"><span>💳</span> Stripe Secured</div>
+  <div class="trust-item"><span>✅</span> Licensed & Insured</div>
+  <div class="trust-item"><span>🇺🇸</span> Utah Based</div>
+</div>
+
+<div class="payment-wrap">
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab-btn active" data-tab="deposit">
+      <span class="tab-icon">📋</span>
+      50% Deposit
+    </button>
+    <button class="tab-btn" data-tab="balance">
+      <span class="tab-icon">✅</span>
+      Final Balance
+    </button>
+  </div>
+
+  <!-- DEPOSIT PANEL -->
+  <div class="panel active" id="panel-deposit">
+    <h2 class="panel-title">Pay Your Deposit</h2>
+    <p class="panel-desc">A 50% deposit is required before work begins. Enter the total project amount and we'll calculate your deposit automatically.</p>
+
+    <div id="deposit-success" class="success-box">
+      <div class="success-icon">🎉</div>
+      <h3>Deposit Received!</h3>
+      <div class="success-amount" id="deposit-success-amount"></div>
+      <p>Thank you! Your deposit has been processed successfully.<br>We'll be in touch shortly to confirm your project start date.<br><br>Questions? Call <a href="tel:+13859557472">(385) 955-7472</a></p>
+    </div>
+
+    <div id="deposit-form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your First Name *</label>
+          <input type="text" id="dep-fname" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label>Your Last Name *</label>
+          <input type="text" id="dep-lname" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Email *</label>
+        <input type="email" id="dep-email" placeholder="john@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Project / Invoice Reference</label>
+        <input type="text" id="dep-ref" placeholder="e.g. ORM-2026-001 or your address">
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="form-group">
+        <label>Total Project Amount ($) *</label>
+        <input type="number" id="dep-total" placeholder="e.g. 3500" min="100" step="0.01">
+      </div>
+
+      <!-- AMOUNT BREAKDOWN -->
+      <div class="amount-breakdown" id="dep-breakdown">
+        <div class="breakdown-row">
+          <span class="breakdown-label">Total Project</span>
+          <span class="breakdown-val" id="bd-total">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Deposit Due Today <span class="deposit-badge">50%</span></span>
+          <span class="breakdown-val highlight" id="bd-deposit">—</span>
+        </div>
+        <div class="breakdown-row">
+          <span class="breakdown-label">Remaining Balance (after work)</span>
+          <span class="breakdown-val" id="bd-remaining">—</span>
+        </div>
+        <div class="breakdown-row total">
+          <span class="breakdown-label">You Pay Now</span>
+          <span class="breakdown-val highlight" id="bd-now">—</span>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="card-section">
+        <label>Card Details</label>
+        <div id="card-element"></div>
+        <div id="card-errors"></div>
+      </div>
+
+      <button class="pay-btn" id="dep-pay-btn" disabled>
+        <span class="spinner" id="dep-spinner"></span>
+        <span id="dep-btn-label">Enter amount above to continue</span>
+      </button>
+      <p class="pay-note">🔒 Payments secured by <a href="https://stripe.com" target="_blank">Stripe</a>. ORM Flooring never stores your card info.</p>
+    </div>
+  </div>
+
+  <!-- BALANCE PANEL -->
+  <div class="panel" id="panel-balance">
+    <h2 class="panel-title">Pay Final Balance</h2>
+    <p class="panel-desc">Your project is complete — thank you for choosing ORM Flooring! Pay your remaining balance below.</p>
+
+    <div id="balance-success" class="success-box">
+      <div class="success-icon">🏠</div>
+      <h3>Payment Complete!</h3>
+      <div class="success-amount" id="balance-success-amount"></div>
+      <p>Your project is fully paid. Thank you for trusting ORM Flooring!<br>We'd love a review — <a href="https://g.page/r/YOUR_GOOGLE_REVIEW_LINK" target="_blank">leave us one on Google</a> 🙏<br><br>Questions? Call <a href="tel:+13859557472">(385) 955-7472</a></p>
+    </div>
+
+    <div id="balance-form-wrap">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your First Name *</label>
+          <input type="text" id="bal-fname" placeholder="John" required>
+        </div>
+        <div class="form-group">
+          <label>Your Last Name *</label>
+          <input type="text" id="bal-lname" placeholder="Smith" required>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Your Email *</label>
+        <input type="email" id="bal-email" placeholder="john@email.com" required>
+      </div>
+      <div class="form-group">
+        <label>Project / Invoice Reference</label>
+        <input type="text" id="bal-ref" placeholder="e.g. ORM-2026-001 or your address">
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="form-group">
+        <label>Balance Amount to Pay ($) *</label>
+        <input type="number" id="bal-amount" placeholder="e.g. 1750" min="1" step="0.01">
+      </div>
+
+      <div class="amount-breakdown" id="bal-breakdown">
+        <div class="breakdown-row total">
+          <span class="breakdown-label">Final Balance Due</span>
+          <span class="breakdown-val highlight" id="bal-display">—</span>
+        </div>
+      </div>
+
+      <div class="section-divider"></div>
+
+      <div class="card-section">
+        <label>Card Details</label>
+        <div id="card-element-balance"></div>
+        <div id="card-errors-balance"></div>
+      </div>
+
+      <button class="pay-btn" id="bal-pay-btn" disabled>
+        <span class="spinner" id="bal-spinner"></span>
+        <span id="bal-btn-label">Enter amount above to continue</span>
+      </button>
+      <p class="pay-note">🔒 Payments secured by <a href="https://stripe.com" target="_blank">Stripe</a>. ORM Flooring never stores your card info.</p>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">ORM <span>Flooring</span> & Services LLC</div>
+  <p>© 2026 ORM Flooring & Services LLC — Licensed & Insured — Utah</p>
+</footer>
+
+<a href="https://wa.me/13859557472" class="wa-btn" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ─── CONFIG — Replace with your Stripe Publishable Key ───
+const STRIPE_KEY = 'pk_live_YOUR_PUBLISHABLE_KEY_HERE';
+const stripe = Stripe(STRIPE_KEY);
+const elements = stripe.elements();
+
+// ─── TABS ───
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    this.classList.add('active');
+    document.getElementById('panel-' + this.dataset.tab).classList.add('active');
+  });
+});
+
+// ─── FORMAT currency ───
+const fmt = n => '$' + Number(n).toLocaleString('en-US', {minimumFractionDigits:2, maximumFractionDigits:2});
+
+// ─── DEPOSIT: Card Element ───
+const cardDep = elements.create('card', {style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
+cardDep.mount('#card-element');
+cardDep.on('change', e => { document.getElementById('card-errors').textContent = e.error ? e.error.message : ''; });
+
+// ─── DEPOSIT: Amount logic ───
+const depTotal = document.getElementById('dep-total');
+const depBreakdown = document.getElementById('dep-breakdown');
+const depPayBtn = document.getElementById('dep-pay-btn');
+const depBtnLabel = document.getElementById('dep-btn-label');
+let depAmount = 0;
+
+depTotal.addEventListener('input', function() {
+  const total = parseFloat(this.value) || 0;
+  if (total >= 1) {
+    const deposit = total * 0.5;
+    const remaining = total * 0.5;
+    document.getElementById('bd-total').textContent = fmt(total);
+    document.getElementById('bd-deposit').textContent = fmt(deposit);
+    document.getElementById('bd-remaining').textContent = fmt(remaining);
+    document.getElementById('bd-now').textContent = fmt(deposit);
+    depBreakdown.classList.add('visible');
+    depAmount = deposit;
+    depPayBtn.disabled = false;
+    depBtnLabel.textContent = `Pay Deposit — ${fmt(deposit)}`;
+  } else {
+    depBreakdown.classList.remove('visible');
+    depAmount = 0;
+    depPayBtn.disabled = true;
+    depBtnLabel.textContent = 'Enter amount above to continue';
+  }
+});
+
+// ─── DEPOSIT: Handle payment ───
+depPayBtn.addEventListener('click', async function() {
+  const fname = document.getElementById('dep-fname').value.trim();
+  const lname = document.getElementById('dep-lname').value.trim();
+  const email = document.getElementById('dep-email').value.trim();
+  if (!fname || !lname || !email || depAmount <= 0) {
+    alert('Please fill in your name, email, and project amount.');
+    return;
+  }
+  this.disabled = true;
+  document.getElementById('dep-spinner').style.display = 'block';
+  depBtnLabel.textContent = 'Processing...';
+  try {
+    // Create PaymentIntent via your backend
+    // NOTE: You need a small backend or Netlify function to create the PaymentIntent
+    // Replace this URL with your backend endpoint
+    const res = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        amount: Math.round(depAmount * 100), // cents
+        currency: 'usd',
+        description: `ORM Flooring 50% Deposit — ${fname} ${lname} — ${document.getElementById('dep-ref').value || 'No ref'}`,
+        receipt_email: email
+      })
+    });
+    const {clientSecret} = await res.json();
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardDep,
+        billing_details: {name: `${fname} ${lname}`, email}
+      }
+    });
+    if (result.error) {
+      document.getElementById('card-errors').textContent = result.error.message;
+      this.disabled = false;
+      document.getElementById('dep-spinner').style.display = 'none';
+      depBtnLabel.textContent = `Pay Deposit — ${fmt(depAmount)}`;
+    } else {
+      document.getElementById('deposit-success-amount').textContent = fmt(depAmount);
+      document.getElementById('deposit-success').classList.add('visible');
+      document.getElementById('deposit-form-wrap').style.display = 'none';
+    }
+  } catch(err) {
+    document.getElementById('card-errors').textContent = 'Something went wrong. Please call (385) 955-7472.';
+    this.disabled = false;
+    document.getElementById('dep-spinner').style.display = 'none';
+    depBtnLabel.textContent = `Pay Deposit — ${fmt(depAmount)}`;
+  }
+});
+
+// ─── BALANCE: Card Element ───
+const cardBal = elements.create('card', {style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
+cardBal.mount('#card-element-balance');
+cardBal.on('change', e => { document.getElementById('card-errors-balance').textContent = e.error ? e.error.message : ''; });
+
+// ─── BALANCE: Amount logic ───
+const balAmount = document.getElementById('bal-amount');
+const balBreakdown = document.getElementById('bal-breakdown');
+const balPayBtn = document.getElementById('bal-pay-btn');
+const balBtnLabel = document.getElementById('bal-btn-label');
+let balAmt = 0;
+
+balAmount.addEventListener('input', function() {
+  const amt = parseFloat(this.value) || 0;
+  if (amt >= 1) {
+    document.getElementById('bal-display').textContent = fmt(amt);
+    balBreakdown.classList.add('visible');
+    balAmt = amt;
+    balPayBtn.disabled = false;
+    balBtnLabel.textContent = `Pay Balance — ${fmt(amt)}`;
+  } else {
+    balBreakdown.classList.remove('visible');
+    balAmt = 0;
+    balPayBtn.disabled = true;
+    balBtnLabel.textContent = 'Enter amount above to continue';
+  }
+});
+
+// ─── BALANCE: Handle payment ───
+balPayBtn.addEventListener('click', async function() {
+  const fname = document.getElementById('bal-fname').value.trim();
+  const lname = document.getElementById('bal-lname').value.trim();
+  const email = document.getElementById('bal-email').value.trim();
+  if (!fname || !lname || !email || balAmt <= 0) {
+    alert('Please fill in your name, email, and balance amount.');
+    return;
+  }
+  this.disabled = true;
+  document.getElementById('bal-spinner').style.display = 'block';
+  balBtnLabel.textContent = 'Processing...';
+  try {
+    const res = await fetch('/api/create-payment-intent', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        amount: Math.round(balAmt * 100),
+        currency: 'usd',
+        description: `ORM Flooring Final Balance — ${fname} ${lname} — ${document.getElementById('bal-ref').value || 'No ref'}`,
+        receipt_email: email
+      })
+    });
+    const {clientSecret} = await res.json();
+    const result = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardBal,
+        billing_details: {name: `${fname} ${lname}`, email}
+      }
+    });
+    if (result.error) {
+      document.getElementById('card-errors-balance').textContent = result.error.message;
+      this.disabled = false;
+      document.getElementById('bal-spinner').style.display = 'none';
+      balBtnLabel.textContent = `Pay Balance — ${fmt(balAmt)}`;
+    } else {
+      document.getElementById('balance-success-amount').textContent = fmt(balAmt);
+      document.getElementById('balance-success').classList.add('visible');
+      document.getElementById('balance-form-wrap').style.display = 'none';
+    }
+  } catch(err) {
+    document.getElementById('card-errors-balance').textContent = 'Something went wrong. Please call (385) 955-7472.';
+    this.disabled = false;
+    document.getElementById('bal-spinner').style.display = 'none';
+    balBtnLabel.textContent = `Pay Balance — ${fmt(balAmt)}`;
+  }
+});
+
+// ─── URL params auto-fill ───
+// Usage: payments.html?amount=3500&type=deposit&ref=ORM-2026-001
+const params = new URLSearchParams(window.location.search);
+if (params.get('amount')) {
+  const amt = params.get('amount');
+  const type = params.get('type') || 'deposit';
+  const ref = params.get('ref') || '';
+  if (type === 'balance') {
+    document.querySelector('[data-tab="balance"]').click();
+    document.getElementById('bal-amount').value = amt;
+    document.getElementById('bal-amount').dispatchEvent(new Event('input'));
+    if (ref) document.getElementById('bal-ref').value = ref;
+  } else {
+    document.getElementById('dep-total').value = amt;
+    document.getElementById('dep-total').dispatchEvent(new Event('input'));
+    if (ref) document.getElementById('dep-ref').value = ref;
+  }
+}
+</script>
+</body>
+</html>

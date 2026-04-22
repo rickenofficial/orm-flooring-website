@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Free Estimate — ORM Flooring & Services LLC</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--white:#fafaf8;--cream:#f2ede6;--gold:#c9a84c;--gold-light:#e8d5a3;--gray:#8a8880;--dark:#1a1a18;--green:#27ae60;--red:#c0392b}
+body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--black)}
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
+.nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:600;color:var(--black)}
+.nav-logo span{color:var(--gold)}
+.nav-cta{background:var(--black);color:var(--white);padding:0.6rem 1.4rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background 0.2s}
+.nav-cta:hover{background:var(--gold)}
+
+/* HERO */
+.page-header{padding:9rem 3rem 5rem;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.header-left{opacity:0;animation:fadeUp 0.7s 0.1s forwards}
+.page-eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
+.page-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.5rem,4vw,3.8rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:1.2rem}
+.page-title em{font-style:italic;color:var(--gold-light)}
+.page-desc{font-size:0.88rem;color:rgba(255,255,255,0.45);line-height:1.8}
+.header-right{opacity:0;animation:fadeUp 0.7s 0.3s forwards}
+.promise-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
+.promise-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
+.promise-icon{font-size:1.2rem;width:32px;text-align:center;flex-shrink:0}
+.promise-text strong{display:block;font-size:0.82rem;color:var(--white);font-weight:500;margin-bottom:0.1rem}
+.promise-text span{font-size:0.75rem;color:rgba(255,255,255,0.4)}
+
+/* STEPS */
+.steps-bar{background:var(--cream);padding:2rem 3rem;display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto}
+.step{display:flex;align-items:center;gap:0.6rem;padding:0 1.5rem;flex-shrink:0}
+.step-num{width:28px;height:28px;background:var(--black);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:500;flex-shrink:0}
+.step-num.active{background:var(--gold);color:var(--black)}
+.step-num.done{background:var(--green);color:var(--white)}
+.step-label{font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray);white-space:nowrap}
+.step-label.active{color:var(--black);font-weight:500}
+.step-arrow{color:rgba(0,0,0,0.2);font-size:0.8rem;padding:0 0.5rem}
+
+/* FORM WRAP */
+.estimate-wrap{max-width:780px;margin:0 auto;padding:4rem 2rem 6rem}
+
+/* STEP PANELS */
+.step-panel{display:none}
+.step-panel.active{display:block;animation:fadeUp 0.4s forwards}
+
+.step-header{margin-bottom:2rem}
+.step-number{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
+.step-title{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;margin-bottom:0.4rem}
+.step-subtitle{font-size:0.82rem;color:var(--gray);line-height:1.6}
+
+/* FORM ELEMENTS */
+.form-group{margin-bottom:1.3rem}
+.form-group label{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;font-weight:500}
+.form-group input,.form-group select,.form-group textarea{width:100%;font-family:"DM Sans",sans-serif;font-size:0.88rem;padding:0.85rem 1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white);color:var(--black);outline:none;transition:border-color 0.2s;-webkit-appearance:none;border-radius:0}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
+.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
+
+/* SERVICE SELECTOR */
+.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;margin-top:0.5rem}
+.service-option{border:1px solid rgba(0,0,0,0.12);padding:1.2rem;cursor:pointer;transition:all 0.2s;position:relative}
+.service-option:hover{border-color:var(--gold)}
+.service-option.selected{border-color:var(--gold);background:rgba(201,168,76,0.05)}
+.service-option.selected::after{content:"✓";position:absolute;top:0.6rem;right:0.8rem;color:var(--gold);font-size:0.85rem;font-weight:600}
+.service-option input[type="checkbox"]{display:none}
+.service-icon-lg{font-size:1.5rem;margin-bottom:0.6rem}
+.service-name{font-size:0.85rem;font-weight:500;margin-bottom:0.2rem}
+.service-hint{font-size:0.72rem;color:var(--gray)}
+
+/* ROOM BUILDER */
+.room-builder{margin-top:0.5rem}
+.room-entry{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:0.8rem;padding:1rem;background:var(--cream)}
+.room-entry .form-group{margin-bottom:0}
+.room-entry label{font-size:0.65rem}
+.remove-room{background:none;border:1px solid rgba(0,0,0,0.12);color:var(--gray);width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;align-self:end;transition:all 0.2s;flex-shrink:0;margin-bottom:0}
+.remove-room:hover{border-color:var(--red);color:var(--red)}
+.add-room-btn{display:flex;align-items:center;gap:0.5rem;background:none;border:1px dashed rgba(0,0,0,0.2);color:var(--gray);padding:0.7rem 1.2rem;cursor:pointer;font-family:"DM Sans",sans-serif;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;margin-top:0.4rem}
+.add-room-btn:hover{border-color:var(--gold);color:var(--gold)}
+.sqft-total{background:var(--dark);color:var(--white);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem}
+.sqft-total span{font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
+.sqft-total strong{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--gold)}
+
+/* PHOTO UPLOAD */
+.upload-zone{border:2px dashed rgba(0,0,0,0.15);padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;background:var(--cream)}
+.upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:rgba(201,168,76,0.04)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.upload-icon{font-size:2rem;margin-bottom:0.8rem}
+.upload-title{font-size:0.85rem;font-weight:500;margin-bottom:0.3rem}
+.upload-hint{font-size:0.75rem;color:var(--gray)}
+.photo-previews{display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;margin-top:1rem}
+.photo-thumb{position:relative;aspect-ratio:1;overflow:hidden;background:var(--cream)}
+.photo-thumb img{width:100%;height:100%;object-fit:cover}
+.photo-thumb button{position:absolute;top:0.2rem;right:0.2rem;background:rgba(0,0,0,0.6);color:white;border:none;width:20px;height:20px;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center}
+
+/* NAV BUTTONS */
+.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,0.08)}
+.btn-back{background:none;border:1px solid rgba(0,0,0,0.15);color:var(--black);padding:0.8rem 1.8rem;font-family:"DM Sans",sans-serif;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
+.btn-back:hover{border-color:var(--black)}
+.btn-next{background:var(--black);color:var(--white);padding:0.85rem 2rem;font-family:"DM Sans",sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:0.5rem}
+.btn-next:hover{background:var(--gold);color:var(--black)}
+.btn-next:disabled{opacity:0.5;cursor:not-allowed}
+.btn-submit{background:var(--gold);color:var(--black);padding:0.9rem 2.2rem;font-family:"DM Sans",sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.6rem}
+.btn-submit:hover{background:var(--gold-light)}
+.btn-submit:disabled{opacity:0.5;cursor:not-allowed}
+.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,0.2);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
+
+/* SUMMARY BOX */
+.summary-box{background:var(--cream);padding:1.5rem;margin-bottom:2rem}
+.summary-title{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:500}
+.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
+.summary-item strong{display:block;font-size:0.72rem;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.2rem}
+.summary-item span{font-size:0.88rem;color:var(--black)}
+
+/* SUCCESS */
+.success-screen{display:none;text-align:center;padding:4rem 2rem}
+.success-screen.visible{display:block;animation:fadeUp 0.5s forwards}
+.success-circle{width:80px;height:80px;background:rgba(39,174,96,0.1);border:2px solid rgba(39,174,96,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2rem}
+.success-screen h2{font-family:"Cormorant Garamond",serif;font-size:2.5rem;font-weight:300;margin-bottom:0.6rem}
+.success-screen p{font-size:0.88rem;color:var(--gray);line-height:1.8;max-width:440px;margin:0 auto 2rem}
+.success-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
+.success-actions a{padding:0.8rem 1.8rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none}
+.btn-call{background:var(--black);color:var(--white)}
+.btn-wa{background:#25D366;color:var(--white)}
+
+/* ERROR */
+.field-error{font-size:0.72rem;color:var(--red);margin-top:0.3rem}
+.form-group input.error,.form-group select.error,.form-group textarea.error{border-color:var(--red)}
+
+/* FOOTER */
+footer{background:var(--black);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
+.footer-logo{font-family:"Cormorant Garamond",serif;font-size:1.1rem;color:var(--white)}
+.footer-logo span{color:var(--gold)}
+footer p{font-size:0.72rem;color:rgba(255,255,255,0.25)}
+.wa-btn{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:200;transition:transform 0.2s}
+.wa-btn:hover{transform:scale(1.1)}
+.wa-btn svg{width:28px;height:28px;fill:white}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:900px){
+  nav{padding:1rem 1.5rem}
+  .page-header{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2rem}
+  .steps-bar{justify-content:flex-start;padding:1.2rem 1.5rem}
+  .estimate-wrap{padding:2.5rem 1.2rem 4rem}
+  .form-row,.form-row-3{grid-template-columns:1fr}
+  .service-grid{grid-template-columns:1fr 1fr}
+  .room-entry{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
+  .photo-previews{grid-template-columns:repeat(3,1fr)}
+  .summary-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;text-align:center;padding:1.5rem}
+}
+@media(max-width:480px){
+  .service-grid{grid-template-columns:1fr}
+  .photo-previews{grid-template-columns:repeat(2,1fr)}
+  .step-nav{flex-direction:column;gap:0.8rem}
+  .btn-next,.btn-back,.btn-submit{width:100%;justify-content:center}
+}
+
+.nav-logo-img{height:38px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
+@keyframes logoSlide{to{opacity:1;transform:translateX(0)}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC"></a>
+  <a href="tel:+13859557472" class="nav-cta">📞 (385) 955-7472</a>
+</nav>
+
+<!-- HEADER -->
+<div class="page-header">
+  <div class="header-left">
+    <p class="page-eyebrow">100% Free — No Obligation</p>
+    <h1 class="page-title">Get your free <em>estimate</em></h1>
+    <p class="page-desc">Fill out the form below and we'll get back to you within 24 hours with a detailed quote. No pressure, no hidden fees — just honest pricing.</p>
+  </div>
+  <div class="header-right">
+    <ul class="promise-list">
+      <li class="promise-item">
+        <span class="promise-icon">⚡</span>
+        <div class="promise-text"><strong>Response within 24 hours</strong><span>Usually same day</span></div>
+      </li>
+      <li class="promise-item">
+        <span class="promise-icon">💰</span>
+        <div class="promise-text"><strong>Transparent pricing</strong><span>No hidden fees, ever</span></div>
+      </li>
+      <li class="promise-item">
+        <span class="promise-icon">📐</span>
+        <div class="promise-text"><strong>Accurate quotes</strong><span>Based on your exact measurements</span></div>
+      </li>
+      <li class="promise-item">
+        <span class="promise-icon">✅</span>
+        <div class="promise-text"><strong>Licensed & Insured</strong><span>Utah State Contractor</span></div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<!-- STEP INDICATORS -->
+<div class="steps-bar" id="steps-bar">
+  <div class="step">
+    <div class="step-num active" id="snum-1">1</div>
+    <span class="step-label active" id="slabel-1">Contact</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="step">
+    <div class="step-num" id="snum-2">2</div>
+    <span class="step-label" id="slabel-2">Services</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="step">
+    <div class="step-num" id="snum-3">3</div>
+    <span class="step-label" id="slabel-3">Measurements</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="step">
+    <div class="step-num" id="snum-4">4</div>
+    <span class="step-label" id="slabel-4">Photos</span>
+  </div>
+  <span class="step-arrow">›</span>
+  <div class="step">
+    <div class="step-num" id="snum-5">5</div>
+    <span class="step-label" id="slabel-5">Review</span>
+  </div>
+</div>
+
+<div class="estimate-wrap">
+
+  <!-- SUCCESS SCREEN -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-circle">🎉</div>
+    <h2>Estimate Request Sent!</h2>
+    <p>Thank you! We received your estimate request and will get back to you within 24 hours — usually same day.<br><br>In the meantime, feel free to call or text us directly.</p>
+    <div class="success-actions">
+      <a href="tel:+13859557472" class="success-actions a btn-call">📞 Call Us</a>
+      <a href="https://wa.me/13859557472" target="_blank" class="success-actions a btn-wa">💬 WhatsApp</a>
+    </div>
+  </div>
+
+  <!-- STEP 1 — CONTACT -->
+  <div class="step-panel active" id="panel-1">
+    <div class="step-header">
+      <p class="step-number">Step 1 of 5</p>
+      <h2 class="step-title">Your contact info</h2>
+      <p class="step-subtitle">We'll use this to send you your quote and schedule the in-home estimate.</p>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>First Name *</label>
+        <input type="text" id="s1-fname" placeholder="John">
+      </div>
+      <div class="form-group">
+        <label>Last Name *</label>
+        <input type="text" id="s1-lname" placeholder="Smith">
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Phone Number *</label>
+        <input type="tel" id="s1-phone" placeholder="(435) 000-0000">
+      </div>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="s1-email" placeholder="john@email.com">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Property Address *</label>
+      <input type="text" id="s1-address" placeholder="123 Main St, St. George, UT">
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Property Type *</label>
+        <select id="s1-proptype">
+          <option value="">Select type</option>
+          <option>Single Family Home</option>
+          <option>Condo / Townhome</option>
+          <option>Apartment</option>
+          <option>Commercial Space</option>
+          <option>New Construction</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Preferred Contact Method</label>
+        <select id="s1-contact-pref">
+          <option value="">No preference</option>
+          <option>Phone Call</option>
+          <option>Text / SMS</option>
+          <option>WhatsApp</option>
+          <option>Email</option>
+        </select>
+      </div>
+    </div>
+    <div class="step-nav">
+      <span></span>
+      <button class="btn-next" onclick="goStep(2)">Continue → Services</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 — SERVICES -->
+  <div class="step-panel" id="panel-2">
+    <div class="step-header">
+      <p class="step-number">Step 2 of 5</p>
+      <h2 class="step-title">What flooring do you need?</h2>
+      <p class="step-subtitle">Select all that apply — you can choose multiple services.</p>
+    </div>
+    <div class="service-grid" id="service-grid">
+      <label class="service-option">
+        <input type="checkbox" value="LVP / Luxury Vinyl Plank">
+        <div class="service-icon-lg">◼</div>
+        <div class="service-name">LVP / Luxury Vinyl Plank</div>
+        <div class="service-hint">Waterproof, modern, durable</div>
+      </label>
+      <label class="service-option">
+        <input type="checkbox" value="Hardwood">
+        <div class="service-icon-lg">🪵</div>
+        <div class="service-name">Hardwood</div>
+        <div class="service-hint">Classic solid or engineered wood</div>
+      </label>
+      <label class="service-option">
+        <input type="checkbox" value="Laminate">
+        <div class="service-icon-lg">▦</div>
+        <div class="service-name">Laminate</div>
+        <div class="service-hint">Affordable wood-look option</div>
+      </label>
+      <label class="service-option">
+        <input type="checkbox" value="Carpet">
+        <div class="service-icon-lg">🧶</div>
+        <div class="service-name">Carpet</div>
+        <div class="service-hint">Bedrooms, stairs, living areas</div>
+      </label>
+      <label class="service-option">
+        <input type="checkbox" value="Floor Removal / Demo">
+        <div class="service-icon-lg">🔨</div>
+        <div class="service-name">Floor Removal / Demo</div>
+        <div class="service-hint">Remove existing flooring first</div>
+      </label>
+      <label class="service-option">
+        <input type="checkbox" value="Not sure — need recommendation">
+        <div class="service-icon-lg">💬</div>
+        <div class="service-name">Not sure yet</div>
+        <div class="service-hint">We'll help you choose</div>
+      </label>
+    </div>
+    <div class="form-group" style="margin-top:1.5rem">
+      <label>Current Flooring (what's there now?)</label>
+      <select id="s2-current">
+        <option value="">Select current flooring</option>
+        <option>Carpet</option>
+        <option>Hardwood</option>
+        <option>Tile / Ceramic</option>
+        <option>Vinyl / LVP</option>
+        <option>Concrete / Subfloor</option>
+        <option>Laminate</option>
+        <option>Mixed / Multiple</option>
+        <option>Not sure</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>When do you want to start?</label>
+      <select id="s2-timeline">
+        <option value="">Select timeline</option>
+        <option>As soon as possible</option>
+        <option>Within 2 weeks</option>
+        <option>Within 1 month</option>
+        <option>1–3 months</option>
+        <option>Just getting quotes</option>
+      </select>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(1)">← Back</button>
+      <button class="btn-next" onclick="goStep(3)">Continue → Measurements</button>
+    </div>
+  </div>
+
+  <!-- STEP 3 — MEASUREMENTS -->
+  <div class="step-panel" id="panel-3">
+    <div class="step-header">
+      <p class="step-number">Step 3 of 5</p>
+      <h2 class="step-title">Rooms & measurements</h2>
+      <p class="step-subtitle">Add each room or area. Approximate measurements are fine — we'll verify on-site.</p>
+    </div>
+    <div class="room-builder" id="room-builder"></div>
+    <button class="add-room-btn" onclick="addRoom()">+ Add Another Room</button>
+    <div class="sqft-total">
+      <span>Estimated Total</span>
+      <strong id="sqft-display">0 sq ft</strong>
+    </div>
+    <div class="form-group" style="margin-top:1.5rem">
+      <label>Additional Notes about the Space</label>
+      <textarea id="s3-notes" placeholder="e.g. stairs included, uneven subfloor, tight hallways, obstacles to work around..."></textarea>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(2)">← Back</button>
+      <button class="btn-next" onclick="goStep(4)">Continue → Photos</button>
+    </div>
+  </div>
+
+  <!-- STEP 4 — PHOTOS -->
+  <div class="step-panel" id="panel-4">
+    <div class="step-header">
+      <p class="step-number">Step 4 of 5</p>
+      <h2 class="step-title">Photos of your space</h2>
+      <p class="step-subtitle">Optional but helpful — photos help us give you a more accurate quote. Current flooring, room layout, any damage or special areas.</p>
+    </div>
+    <div class="upload-zone" id="upload-zone">
+      <input type="file" id="photo-input" accept="image/*" multiple>
+      <div class="upload-icon">📷</div>
+      <div class="upload-title">Tap to add photos</div>
+      <div class="upload-hint">JPG, PNG up to 10MB each — any number of photos</div>
+    </div>
+    <div class="photo-previews" id="photo-previews"></div>
+    <div class="form-group" style="margin-top:1.5rem">
+      <label>Anything else we should know?</label>
+      <textarea id="s4-notes" placeholder="e.g. pet damage, water stains, specific style preferences, HOA requirements..."></textarea>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(3)">← Back</button>
+      <button class="btn-next" onclick="goStep(5)">Continue → Review</button>
+    </div>
+  </div>
+
+  <!-- STEP 5 — REVIEW -->
+  <div class="step-panel" id="panel-5">
+    <div class="step-header">
+      <p class="step-number">Step 5 of 5</p>
+      <h2 class="step-title">Review & submit</h2>
+      <p class="step-subtitle">Double-check your info before sending. We'll review everything and contact you within 24 hours.</p>
+    </div>
+    <div class="summary-box">
+      <p class="summary-title">Your Estimate Summary</p>
+      <div class="summary-grid" id="summary-grid"></div>
+    </div>
+    <div class="form-group">
+      <label>Anything else to add? (Optional)</label>
+      <textarea id="s5-final" placeholder="Any final questions, special requests, or details we should know..."></textarea>
+    </div>
+    <div class="step-nav">
+      <button class="btn-back" onclick="goStep(4)">← Back</button>
+      <button class="btn-submit" id="submit-btn" onclick="submitForm()">
+        <span class="spinner" id="submit-spinner"></span>
+        <span id="submit-label">🚀 Send My Estimate Request</span>
+      </button>
+    </div>
+  </div>
+
+</div><!-- end estimate-wrap -->
+
+<footer>
+  <div class="footer-logo">ORM <span>Flooring</span> & Services LLC</div>
+  <p>© 2026 ORM Flooring & Services LLC — Licensed & Insured — Utah</p>
+</footer>
+
+<a href="https://wa.me/13859557472" class="wa-btn" target="_blank">
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+
+<script>
+// ─── STATE ───
+let currentStep = 1;
+const totalSteps = 5;
+let rooms = [];
+let photos = [];
+let roomCounter = 0;
+
+// ─── STEP NAVIGATION ───
+function goStep(n) {
+  if (n > currentStep && !validateStep(currentStep)) return;
+  document.getElementById('panel-' + currentStep).classList.remove('active');
+  currentStep = n;
+  document.getElementById('panel-' + currentStep).classList.add('active');
+  updateStepBar();
+  if (n === 5) buildSummary();
+  window.scrollTo({top: document.querySelector('.steps-bar').offsetTop - 80, behavior:'smooth'});
+}
+
+function updateStepBar() {
+  for (let i = 1; i <= totalSteps; i++) {
+    const num = document.getElementById('snum-' + i);
+    const lbl = document.getElementById('slabel-' + i);
+    num.className = 'step-num';
+    lbl.className = 'step-label';
+    if (i < currentStep) { num.className += ' done'; num.textContent = '✓'; }
+    else if (i === currentStep) { num.className += ' active'; num.textContent = i; lbl.className += ' active'; }
+    else { num.textContent = i; }
+  }
+}
+
+// ─── VALIDATION ───
+function validateStep(step) {
+  let valid = true;
+  const req = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return true;
+    const val = el.value.trim();
+    if (!val) { el.classList.add('error'); valid = false; }
+    else el.classList.remove('error');
+    return !!val;
+  };
+  if (step === 1) { req('s1-fname'); req('s1-lname'); req('s1-phone'); req('s1-address'); req('s1-proptype'); }
+  if (step === 2) {
+    const checked = document.querySelectorAll('#service-grid input:checked');
+    if (checked.length === 0) { alert('Please select at least one service.'); valid = false; }
+  }
+  if (step === 3) {
+    if (rooms.length === 0) { alert('Please add at least one room.'); valid = false; }
+  }
+  return valid;
+}
+
+// ─── ROOM BUILDER ───
+function addRoom() {
+  roomCounter++;
+  const id = roomCounter;
+  rooms.push({id, name:'', w:'', l:'', unit:'ft'});
+  renderRooms();
+}
+
+function removeRoom(id) {
+  rooms = rooms.filter(r => r.id !== id);
+  renderRooms();
+  calcTotal();
+}
+
+function renderRooms() {
+  const builder = document.getElementById('room-builder');
+  if (rooms.length === 0) { builder.innerHTML = ''; calcTotal(); return; }
+  builder.innerHTML = rooms.map(r => `
+    <div class="room-entry" data-id="${r.id}">
+      <div class="form-group">
+        <label>Room / Area</label>
+        <select onchange="updateRoom(${r.id},'name',this.value)">
+          <option value="">Select room</option>
+          ${['Living Room','Bedroom','Master Bedroom','Kitchen','Hallway','Dining Room','Bathroom','Stairs','Office','Basement','Whole House','Other'].map(opt=>`<option${r.name===opt?' selected':''}>${opt}</option>`).join('')}
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Length (ft)</label>
+        <input type="number" min="1" placeholder="e.g. 15" value="${r.l}" onchange="updateRoom(${r.id},'l',this.value)">
+      </div>
+      <div class="form-group">
+        <label>Width (ft)</label>
+        <input type="number" min="1" placeholder="e.g. 12" value="${r.w}" onchange="updateRoom(${r.id},'w',this.value)">
+      </div>
+      <button class="remove-room" onclick="removeRoom(${r.id})" title="Remove">✕</button>
+    </div>
+  `).join('');
+}
+
+function updateRoom(id, field, val) {
+  const r = rooms.find(r => r.id === id);
+  if (r) { r[field] = val; calcTotal(); }
+}
+
+function calcTotal() {
+  const total = rooms.reduce((sum, r) => {
+    const area = (parseFloat(r.l)||0) * (parseFloat(r.w)||0);
+    return sum + area;
+  }, 0);
+  document.getElementById('sqft-display').textContent = Math.round(total).toLocaleString() + ' sq ft';
+}
+
+// ─── SERVICE OPTIONS ───
+document.querySelectorAll('.service-option').forEach(opt => {
+  opt.addEventListener('click', function() {
+    const cb = this.querySelector('input[type="checkbox"]');
+    cb.checked = !cb.checked;
+    this.classList.toggle('selected', cb.checked);
+  });
+});
+
+// ─── PHOTO UPLOAD ───
+document.getElementById('photo-input').addEventListener('change', function() {
+  Array.from(this.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      photos.push({name: file.name, dataUrl: e.target.result});
+      renderPreviews();
+    };
+    reader.readAsDataURL(file);
+  });
+});
+
+const uploadZone = document.getElementById('upload-zone');
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('dragover'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  Array.from(e.dataTransfer.files).filter(f=>f.type.startsWith('image/')).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = ev => { photos.push({name:file.name, dataUrl:ev.target.result}); renderPreviews(); };
+    reader.readAsDataURL(file);
+  });
+});
+
+function renderPreviews() {
+  document.getElementById('photo-previews').innerHTML = photos.map((p,i) => `
+    <div class="photo-thumb">
+      <img src="${p.dataUrl}" alt="${p.name}">
+      <button onclick="removePhoto(${i})">✕</button>
+    </div>
+  `).join('');
+}
+function removePhoto(i) { photos.splice(i,1); renderPreviews(); }
+
+// ─── SUMMARY ───
+function buildSummary() {
+  const services = [...document.querySelectorAll('#service-grid input:checked')].map(c=>c.value).join(', ') || '—';
+  const sqft = document.getElementById('sqft-display').textContent;
+  const roomList = rooms.map(r=>`${r.name||'Room'} (${r.l||'?'}×${r.w||'?'} ft)`).join(', ') || '—';
+  const grid = document.getElementById('summary-grid');
+  const items = [
+    ['Name', `${document.getElementById('s1-fname').value} ${document.getElementById('s1-lname').value}`],
+    ['Phone', document.getElementById('s1-phone').value],
+    ['Address', document.getElementById('s1-address').value],
+    ['Property Type', document.getElementById('s1-proptype').value],
+    ['Services', services],
+    ['Current Flooring', document.getElementById('s2-current').value || '—'],
+    ['Timeline', document.getElementById('s2-timeline').value || '—'],
+    ['Total Sq Ft', sqft],
+    ['Rooms', roomList],
+    ['Photos', photos.length + ' attached'],
+  ];
+  grid.innerHTML = items.map(([k,v])=>`
+    <div class="summary-item"><strong>${k}</strong><span>${v}</span></div>
+  `).join('');
+}
+
+// ─── SUBMIT ───
+async function submitForm() {
+  const btn = document.getElementById('submit-btn');
+  const spinner = document.getElementById('submit-spinner');
+  const label = document.getElementById('submit-label');
+  btn.disabled = true;
+  spinner.style.display = 'block';
+  label.textContent = 'Sending...';
+
+  const services = [...document.querySelectorAll('#service-grid input:checked')].map(c=>c.value).join(', ');
+  const roomDetails = rooms.map(r=>`${r.name||'Room'}: ${r.l||'?'} x ${r.w||'?'} ft`).join('\n');
+  const sqft = document.getElementById('sqft-display').textContent;
+
+  const payload = {
+    apiKey: 'YOUR_STATICFORMS_API_KEY',
+    subject: `New Estimate Request — ORM Flooring — ${document.getElementById('s1-fname').value} ${document.getElementById('s1-lname').value}`,
+    name: `${document.getElementById('s1-fname').value} ${document.getElementById('s1-lname').value}`,
+    email: document.getElementById('s1-email').value || 'not provided',
+    phone: document.getElementById('s1-phone').value,
+    message: `
+ESTIMATE REQUEST — ORM FLOORING & SERVICES LLC
+==============================================
+CONTACT INFO
+Name: ${document.getElementById('s1-fname').value} ${document.getElementById('s1-lname').value}
+Phone: ${document.getElementById('s1-phone').value}
+Email: ${document.getElementById('s1-email').value || 'not provided'}
+Address: ${document.getElementById('s1-address').value}
+Property Type: ${document.getElementById('s1-proptype').value}
+Preferred Contact: ${document.getElementById('s1-contact-pref').value || 'No preference'}
+
+SERVICES REQUESTED
+${services || 'Not specified'}
+
+Current Flooring: ${document.getElementById('s2-current').value || 'Not specified'}
+Timeline: ${document.getElementById('s2-timeline').value || 'Not specified'}
+
+MEASUREMENTS
+${roomDetails || 'No rooms added'}
+Total Estimated Sq Ft: ${sqft}
+
+Notes: ${document.getElementById('s3-notes').value || 'None'}
+
+PHOTOS
+${photos.length} photo(s) attached
+
+Additional Notes: ${document.getElementById('s4-notes').value || 'None'}
+Final Notes: ${document.getElementById('s5-final').value || 'None'}
+    `.trim()
+  };
+
+  try {
+    const res = await fetch('https://api.staticforms.xyz/submit', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(payload)
+    });
+    const data = await res.json();
+    if (data.success) {
+      document.querySelector('.estimate-wrap').innerHTML = '';
+      document.getElementById('success-screen') && document.getElementById('success-screen').remove();
+      document.querySelector('.estimate-wrap').innerHTML = `
+        <div class="success-screen visible">
+          <div class="success-circle">🎉</div>
+          <h2>Estimate Request Sent!</h2>
+          <p>Thank you, ${document.getElementById('s1-fname') ? document.getElementById('s1-fname').value : ''}! We received your request and will get back to you within 24 hours — usually same day.<br><br>Questions? Call or text us directly.</p>
+          <div class="success-actions">
+            <a href="tel:+13859557472" class="btn-call">📞 Call (385) 955-7472</a>
+            <a href="https://wa.me/13859557472" target="_blank" class="btn-wa">💬 WhatsApp</a>
+          </div>
+        </div>`;
+      document.querySelector('.steps-bar').style.display = 'none';
+      window.scrollTo({top:0,behavior:'smooth'});
+    } else {
+      throw new Error('Submission failed');
+    }
+  } catch(err) {
+    alert('Something went wrong. Please call us directly at (385) 955-7472 or send a WhatsApp message.');
+    btn.disabled = false;
+    spinner.style.display = 'none';
+    label.textContent = '🚀 Send My Estimate Request';
+  }
+}
+
+// ─── INIT — add first room automatically ───
+addRoom();
+</script>
+</body>
+</html>
