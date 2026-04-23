@@ -3,141 +3,48 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORM Flooring & Services LLC — Utah Flooring Contractor</title>
-<meta name="description" content="Licensed & insured flooring contractor serving all of Utah. LVP, hardwood, laminate, carpet. Free estimates. Call (385) 955-7472.">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#0a0a0a;--white:#fafaf8;--cream:#f2ede6;--gold:#c9a84c;--gold-light:#e8d5a3;--gray:#8a8880;--dark:#1a1a18}
-body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--black);overflow-x:hidden}
-
-.nav-logo-img{height:38px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
-@keyframes logoSlide{to{opacity:1;transform:translateX(0)}}
-
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,0.92);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
-.nav-links{display:flex;gap:2.5rem;list-style:none}
-.nav-links a{font-size:0.82rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--black);text-decoration:none;opacity:0.7;transition:opacity 0.2s}
-.nav-links a:hover{opacity:1}
-.nav-cta{background:var(--black);color:var(--white);padding:0.6rem 1.4rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background 0.2s}
-.nav-cta:hover{background:var(--gold)}
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;padding-top:5rem}
-.hero-left{background:var(--dark);display:flex;flex-direction:column;justify-content:center;padding:5rem 4rem;position:relative;overflow:hidden}
-.hero-left::before{content:"";position:absolute;top:-20%;left:-10%;width:70%;height:70%;background:radial-gradient(circle,rgba(201,168,76,0.12) 0%,transparent 70%);pointer-events:none}
-.hero-eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.2s forwards}
-.hero-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.8rem,4vw,4.2rem);font-weight:300;line-height:1.1;color:var(--white);margin-bottom:1.5rem;opacity:0;animation:fadeUp 0.8s 0.4s forwards}
-.hero-title em{font-style:italic;color:var(--gold-light)}
-.hero-desc{font-size:0.9rem;line-height:1.8;color:rgba(255,255,255,0.55);max-width:380px;margin-bottom:2.5rem;opacity:0;animation:fadeUp 0.8s 0.6s forwards}
-.hero-actions{display:flex;gap:1rem;opacity:0;animation:fadeUp 0.8s 0.8s forwards}
-.btn-primary{background:var(--gold);color:var(--black);padding:0.85rem 2rem;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.2s}
-.btn-primary:hover{background:var(--gold-light)}
-.btn-outline{border:1px solid rgba(255,255,255,0.2);color:var(--white);padding:0.85rem 2rem;font-size:0.82rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:all 0.2s}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold)}
-.hero-badge{position:absolute;bottom:3rem;left:4rem;display:flex;align-items:center;gap:0.8rem;opacity:0;animation:fadeUp 0.8s 1s forwards}
-.badge-icon{width:36px;height:36px;border:1px solid rgba(201,168,76,0.4);display:flex;align-items:center;justify-content:center;color:var(--gold)}
-.badge-text{font-size:0.75rem;color:rgba(255,255,255,0.5);letter-spacing:0.04em}
-.badge-text strong{display:block;color:var(--white);font-weight:500}
-.hero-right{background:var(--cream);display:grid;grid-template-rows:2fr 1fr;overflow:hidden;opacity:0;animation:fadeIn 1s 0.3s forwards}
-.hero-img-main{position:relative;overflow:hidden}
-.floor-pattern{width:100%;height:100%;background:repeating-linear-gradient(90deg,rgba(0,0,0,0.03) 0px,rgba(0,0,0,0.03) 1px,transparent 1px,transparent 80px),repeating-linear-gradient(0deg,rgba(0,0,0,0.02) 0px,rgba(0,0,0,0.02) 1px,transparent 1px,transparent 120px),linear-gradient(160deg,#d4bc9e 0%,#b89070 40%,#96704e 100%)}
-.hero-img-main::after{content:"Hardwood Installation — Utah";position:absolute;bottom:1.2rem;left:1.5rem;font-size:0.7rem;letter-spacing:0.08em;color:rgba(255,255,255,0.7);text-transform:uppercase}
-.hero-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid rgba(0,0,0,0.08)}
-.stat{padding:1.5rem 2rem;border-right:1px solid rgba(0,0,0,0.08)}
-.stat:last-child{border-right:none}
-.stat-num{font-family:"Cormorant Garamond",serif;font-size:2.2rem;font-weight:600;color:var(--black);line-height:1}
-.stat-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--gray);margin-top:0.3rem}
-.section{padding:6rem 3rem}
-.section-header{text-align:center;margin-bottom:4rem}
-.section-eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.section-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3vw,2.8rem);font-weight:300;line-height:1.2}
-.services-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(0,0,0,0.08)}
-.service-card{background:var(--white);padding:2.5rem 2rem;transition:background 0.3s;cursor:default}
-.service-card:hover{background:var(--dark)}
-.service-card:hover .service-name{color:var(--white)}
-.service-card:hover .service-desc{color:rgba(255,255,255,0.5)}
-.service-card:hover .service-icon{color:var(--gold)}
-.service-icon{font-size:1.8rem;margin-bottom:1.2rem;transition:color 0.3s}
-.service-name{font-family:"Cormorant Garamond",serif;font-size:1.3rem;font-weight:400;margin-bottom:0.8rem;transition:color 0.3s}
-.service-desc{font-size:0.82rem;line-height:1.7;color:var(--gray);transition:color 0.3s}
-.why-section{background:var(--dark);padding:6rem 3rem}
-.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;max-width:1100px;margin:0 auto}
-.why-content .section-eyebrow{color:var(--gold)}
-.why-content .section-title{color:var(--white);text-align:left;margin-bottom:1.5rem}
-.why-content p{color:rgba(255,255,255,0.5);line-height:1.8;font-size:0.9rem;margin-bottom:2rem}
-.why-features{display:flex;flex-direction:column;gap:1rem}
-.feature{display:flex;align-items:flex-start;gap:1rem}
-.feature-dot{width:6px;height:6px;background:var(--gold);border-radius:50%;margin-top:0.4rem;flex-shrink:0}
-.feature-text{font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.6}
-.feature-text strong{color:var(--white);font-weight:500}
-.why-visual{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.05)}
-.why-tile{padding:2.5rem 2rem;background:rgba(255,255,255,0.02)}
-.why-tile-num{font-family:"Cormorant Garamond",serif;font-size:3rem;font-weight:300;color:var(--gold);opacity:0.6;line-height:1}
-.why-tile-label{font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-top:0.5rem}
-.testimonials{background:var(--cream);padding:6rem 3rem}
-.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;margin-top:3rem}
-.testimonial{background:var(--white);padding:2rem 2rem 1.5rem;position:relative}
-.testimonial::before{content:"C";font-family:"Cormorant Garamond",serif;font-size:5rem;color:var(--gold);opacity:0.3;position:absolute;top:-0.5rem;left:1.5rem;line-height:1}
-.testimonial-text{font-size:0.88rem;line-height:1.8;color:var(--black);opacity:0.75;margin-bottom:1.5rem;padding-top:2rem}
-.testimonial-author{display:flex;align-items:center;gap:0.8rem}
-.author-avatar{width:36px;height:36px;background:var(--gold);opacity:0.3;border-radius:50%}
-.author-info strong{display:block;font-size:0.82rem;font-weight:500}
-.author-info span{font-size:0.72rem;color:var(--gray);letter-spacing:0.04em}
-.stars{color:var(--gold);font-size:0.8rem;letter-spacing:0.1em;margin-bottom:0.5rem}
-.cta-banner{background:var(--gold);padding:5rem 3rem;text-align:center}
-.cta-banner h2{font-family:"Cormorant Garamond",serif;font-size:clamp(2rem,3.5vw,3rem);font-weight:300;color:var(--black);margin-bottom:0.8rem}
-.cta-banner p{font-size:0.9rem;color:rgba(0,0,0,0.6);margin-bottom:2rem}
-.btn-dark{background:var(--black);color:var(--white);padding:0.9rem 2.5rem;font-size:0.82rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:background 0.2s;margin:0 0.5rem}
-.btn-dark:hover{background:var(--dark)}
-.btn-ghost{border:2px solid var(--black);color:var(--black);padding:0.9rem 2.5rem;font-size:0.82rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;display:inline-block;transition:all 0.2s;margin:0 0.5rem}
-.btn-ghost:hover{background:var(--black);color:var(--white)}
-footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:3rem;align-items:start}
-.footer-brand p{font-size:0.78rem;color:rgba(255,255,255,0.35);margin-top:0.8rem;line-height:1.7;max-width:220px}
-.footer-col h4{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:1.2rem}
-.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:0.6rem}
-.footer-col ul li a{font-size:0.8rem;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s}
-.footer-col ul li a:hover{color:var(--white)}
-.footer-col address{font-style:normal;font-size:0.8rem;color:rgba(255,255,255,0.4);line-height:1.8}
-.footer-col address a{color:rgba(255,255,255,0.4);text-decoration:none}
-.footer-bottom{grid-column:1/-1;border-top:1px solid rgba(255,255,255,0.06);padding-top:1.5rem;display:flex;justify-content:space-between;align-items:center}
-.footer-bottom p{font-size:0.72rem;color:rgba(255,255,255,0.25);letter-spacing:0.04em}
-.wa-btn{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:99;transition:transform 0.2s}
-.wa-btn:hover{transform:scale(1.1)}
-.wa-btn svg{width:28px;height:28px;fill:white}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@media(max-width:900px){
-  .hero{grid-template-columns:1fr}.hero-right{display:none}
-  .services-grid{grid-template-columns:1fr 1fr}
-  .why-grid{grid-template-columns:1fr}
-  .testimonials-grid{grid-template-columns:1fr}
-  footer{grid-template-columns:1fr}
-  nav{padding:1rem 1.5rem}.nav-links{display:none}
-  .section{padding:4rem 1.5rem}.hero-left{padding:4rem 1.5rem}
-}
-</style>
+<link rel="stylesheet" href="css/styles.css">
+<title>ORM Flooring &amp; Services LLC — Utah Flooring Contractor</title>
+<meta name="description" content="Licensed &amp; insured flooring contractor serving all of Utah. LVP, hardwood, laminate, carpet. Free estimates. Call (385) 955-7472.">
 </head>
 <body>
 <nav>
   <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC"></a>
   <ul class="nav-links">
-    <li><a href="index.html">Home</a></li>
-    <li><a href="gallery.html">Gallery</a></li>
-    <li><a href="estimate.html">Free Estimate</a></li>
-    <li><a href="contact.html">Contact</a></li>
+    <li><a href="index.html" class="active">Home</a></li>
+<li><a href="gallery.html">Gallery</a></li>
+<li><a href="estimate.html">Free Estimate</a></li>
+<li><a href="contact.html">Contact</a></li>
+
   </ul>
-  <a href="tel:+13859557472" class="nav-cta">Free Estimate</a>
+  <div class="nav-right">
+    <a href="estimate.html" class="nav-cta">Free Estimate</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="estimate.html">Free Estimate</a>
+  <a href="contact.html">Contact</a>
+  <a href="payments.html">Payments</a>
+  <a href="estimate.html" class="mobile-cta">Get Free Estimate</a>
+</div>
 <section class="hero">
   <div class="hero-left">
-    <p class="hero-eyebrow">Licensed & Insured — Utah</p>
+    <p class="hero-eyebrow">Licensed &amp; Insured — Utah</p>
     <h1 class="hero-title">Floors that <em>define</em> your space</h1>
-    <p class="hero-desc">ORM Flooring & Services LLC delivers premium hardwood, LVP, laminate, and carpet installation across Utah — for homes and businesses that demand quality.</p>
+    <p class="hero-desc">ORM Flooring &amp; Services LLC delivers premium hardwood, LVP, laminate, and carpet installation across Utah — for homes and businesses that demand quality.</p>
     <div class="hero-actions">
       <a href="estimate.html" class="btn-primary">Get Free Estimate</a>
       <a href="gallery.html" class="btn-outline">View Our Work</a>
     </div>
     <div class="hero-badge">
       <div class="badge-icon">✓</div>
-      <div class="badge-text"><strong>Fully Licensed & Insured</strong>Utah State Contractor</div>
+      <div class="badge-text"><strong>Fully Licensed &amp; Insured</strong>Utah State Contractor</div>
     </div>
   </div>
   <div class="hero-right">
@@ -154,10 +61,10 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
     <h2 class="section-title">Our Flooring Services</h2>
   </div>
   <div class="services-grid">
-    <div class="service-card"><div class="service-icon">🪵</div><div class="service-name">Hardwood</div><p class="service-desc">Classic solid and engineered hardwood installation. Timeless beauty that adds lasting value to any home.</p></div>
-    <div class="service-card"><div class="service-icon">◼</div><div class="service-name">LVP / LVT</div><p class="service-desc">Waterproof luxury vinyl plank and tile. The most popular choice for modern homes — durable and low-maintenance.</p></div>
-    <div class="service-card"><div class="service-icon">▦</div><div class="service-name">Laminate</div><p class="service-desc">High-performance laminate flooring that mimics the look of wood or stone at a budget-friendly price point.</p></div>
-    <div class="service-card"><div class="service-icon">🧶</div><div class="service-name">Carpet</div><p class="service-desc">Plush carpet installation for bedrooms, living rooms, and commercial spaces. Comfort underfoot, every step.</p></div>
+    <div class="service-card"><div class="service-icon">🪵</div><div class="service-name">Hardwood</div><p class="service-desc">Classic solid and engineered hardwood. Timeless beauty that adds lasting value to any home.</p></div>
+    <div class="service-card"><div class="service-icon">◼</div><div class="service-name">LVP / LVT</div><p class="service-desc">Waterproof luxury vinyl plank and tile. Durable, beautiful, and low-maintenance.</p></div>
+    <div class="service-card"><div class="service-icon">▦</div><div class="service-name">Laminate</div><p class="service-desc">High-performance laminate flooring that mimics wood or stone at a budget-friendly price.</p></div>
+    <div class="service-card"><div class="service-icon">🧶</div><div class="service-name">Carpet</div><p class="service-desc">Plush carpet for bedrooms, living rooms, and commercial spaces. Comfort every step.</p></div>
   </div>
 </section>
 <section class="why-section">
@@ -165,17 +72,17 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
     <div class="why-content">
       <p class="section-eyebrow">Why Choose ORM</p>
       <h2 class="section-title" style="color:white;text-align:left">The standard others measure themselves by</h2>
-      <p>We're not just installers — we're craftsmen who care about every square foot we touch. From the first estimate to the final walkthrough, ORM Flooring delivers a seamless experience.</p>
+      <p>We're craftsmen who care about every square foot. From first estimate to final walkthrough, ORM Flooring delivers a seamless experience.</p>
       <div class="why-features">
-        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Licensed & Insured</strong> — Full Utah state licensing and insurance on every job.</div></div>
-        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Free Estimates</strong> — No pressure, no hidden fees. Just honest pricing.</div></div>
-        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Residential & Commercial</strong> — From single rooms to full commercial build-outs.</div></div>
-        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>All of Utah</strong> — St. George, Ogden, Salt Lake City, and everywhere in between.</div></div>
-        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Spanish & English</strong> — Hablamos español.</div></div>
+        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Licensed &amp; Insured</strong> — Full Utah state licensing on every job.</div></div>
+        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Free Estimates</strong> — No pressure, no hidden fees.</div></div>
+        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Residential &amp; Commercial</strong> — From single rooms to full build-outs.</div></div>
+        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>All of Utah</strong> — St. George, Ogden, SLC, and everywhere in between.</div></div>
+        <div class="feature"><div class="feature-dot"></div><div class="feature-text"><strong>Spanish &amp; English</strong> — Hablamos español.</div></div>
       </div>
     </div>
     <div class="why-visual">
-      <div class="why-tile"><div class="why-tile-num">100%</div><div class="why-tile-label">Licensed & Insured</div></div>
+      <div class="why-tile"><div class="why-tile-num">100%</div><div class="why-tile-label">Licensed &amp; Insured</div></div>
       <div class="why-tile"><div class="why-tile-num">$0</div><div class="why-tile-label">Free Estimates</div></div>
       <div class="why-tile"><div class="why-tile-num">2+</div><div class="why-tile-label">Service Regions</div></div>
       <div class="why-tile"><div class="why-tile-num">4</div><div class="why-tile-label">Flooring Types</div></div>
@@ -188,9 +95,9 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
     <h2 class="section-title">Real reviews from Utah homeowners</h2>
   </div>
   <div class="testimonials-grid">
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">ORM Flooring did an amazing job installing LVP throughout our entire first floor. Professional, clean, and finished ahead of schedule. Will definitely hire again.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>Maria G.</strong><span>St. George, UT</span></div></div></div>
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">Best flooring contractor in Utah. They replaced all the carpet in our office with hardwood — the transformation was incredible. Fair pricing and great communication.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>James T.</strong><span>Salt Lake City, UT</span></div></div></div>
-    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">Ricardo and his team were fantastic. They gave us a free estimate same day and started the job within the week. Our laminate floors look absolutely beautiful.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>Sarah M.</strong><span>Ogden, UT</span></div></div></div>
+    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">ORM Flooring did an amazing job installing LVP throughout our entire first floor. Professional, clean, and finished ahead of schedule.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>Maria G.</strong><span>St. George, UT</span></div></div></div>
+    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">Best flooring contractor in Utah. They replaced all the carpet in our office with hardwood — incredible transformation. Fair pricing and great communication.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>James T.</strong><span>Salt Lake City, UT</span></div></div></div>
+    <div class="testimonial"><div class="stars">★★★★★</div><p class="testimonial-text">Ricardo and his team were fantastic. Free estimate same day and started within the week. Our laminate floors look absolutely beautiful.</p><div class="testimonial-author"><div class="author-avatar"></div><div class="author-info"><strong>Sarah M.</strong><span>Ogden, UT</span></div></div></div>
   </div>
 </section>
 <section class="cta-banner">
@@ -201,8 +108,8 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
 </section>
 <footer>
   <div class="footer-brand">
-    <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC"></a>
-    <p>Licensed & insured flooring contractor serving all of Utah. Residential & commercial.</p>
+    <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring"></a>
+    <p>Licensed &amp; insured flooring contractor serving all of Utah. Residential &amp; commercial.</p>
   </div>
   <div class="footer-col">
     <h4>Services</h4>
@@ -223,12 +130,28 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
     </address>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 ORM Flooring & Services LLC — All rights reserved</p>
-    <p>Licensed & Insured — Utah State Contractor</p>
+    <p>© 2026 ORM Flooring &amp; Services LLC — All rights reserved</p>
+    <p>Licensed &amp; Insured — Utah State Contractor</p>
   </div>
 </footer>
-<a href="https://wa.me/13859557472" class="wa-btn" target="_blank">
+<a href="https://wa.me/13859557472" class="wa-btn" target="_blank" aria-label="WhatsApp">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+<script>
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+hamburger.addEventListener('click', function() {
+  this.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+mobileMenu.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    document.body.style.overflow = '';
+  });
+});
+</script>
 </body>
 </html>
