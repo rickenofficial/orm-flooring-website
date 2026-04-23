@@ -5,171 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Free Estimate — ORM Flooring & Services LLC</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--black:#0a0a0a;--white:#fafaf8;--cream:#f2ede6;--gold:#c9a84c;--gold-light:#e8d5a3;--gray:#8a8880;--dark:#1a1a18;--green:#27ae60;--red:#c0392b}
-body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--black)}
-nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
-.nav-logo{font-family:"Cormorant Garamond",serif;font-size:1.4rem;font-weight:600;color:var(--black)}
-.nav-logo span{color:var(--gold)}
-.nav-cta{background:var(--black);color:var(--white);padding:0.6rem 1.4rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none;transition:background 0.2s}
-.nav-cta:hover{background:var(--gold)}
-
-/* HERO */
-.page-header{padding:9rem 3rem 5rem;background:var(--dark);display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
-.header-left{opacity:0;animation:fadeUp 0.7s 0.1s forwards}
-.page-eyebrow{font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem}
-.page-title{font-family:"Cormorant Garamond",serif;font-size:clamp(2.5rem,4vw,3.8rem);font-weight:300;color:var(--white);line-height:1.1;margin-bottom:1.2rem}
-.page-title em{font-style:italic;color:var(--gold-light)}
-.page-desc{font-size:0.88rem;color:rgba(255,255,255,0.45);line-height:1.8}
-.header-right{opacity:0;animation:fadeUp 0.7s 0.3s forwards}
-.promise-list{list-style:none;display:flex;flex-direction:column;gap:1rem}
-.promise-item{display:flex;align-items:center;gap:1rem;padding:1rem 1.2rem;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06)}
-.promise-icon{font-size:1.2rem;width:32px;text-align:center;flex-shrink:0}
-.promise-text strong{display:block;font-size:0.82rem;color:var(--white);font-weight:500;margin-bottom:0.1rem}
-.promise-text span{font-size:0.75rem;color:rgba(255,255,255,0.4)}
-
-/* STEPS */
-.steps-bar{background:var(--cream);padding:2rem 3rem;display:flex;align-items:center;justify-content:center;gap:0;overflow-x:auto}
-.step{display:flex;align-items:center;gap:0.6rem;padding:0 1.5rem;flex-shrink:0}
-.step-num{width:28px;height:28px;background:var(--black);color:var(--white);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.72rem;font-weight:500;flex-shrink:0}
-.step-num.active{background:var(--gold);color:var(--black)}
-.step-num.done{background:var(--green);color:var(--white)}
-.step-label{font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--gray);white-space:nowrap}
-.step-label.active{color:var(--black);font-weight:500}
-.step-arrow{color:rgba(0,0,0,0.2);font-size:0.8rem;padding:0 0.5rem}
-
-/* FORM WRAP */
-.estimate-wrap{max-width:780px;margin:0 auto;padding:4rem 2rem 6rem}
-
-/* STEP PANELS */
-.step-panel{display:none}
-.step-panel.active{display:block;animation:fadeUp 0.4s forwards}
-
-.step-header{margin-bottom:2rem}
-.step-number{font-size:0.72rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);margin-bottom:0.5rem}
-.step-title{font-family:"Cormorant Garamond",serif;font-size:2rem;font-weight:300;margin-bottom:0.4rem}
-.step-subtitle{font-size:0.82rem;color:var(--gray);line-height:1.6}
-
-/* FORM ELEMENTS */
-.form-group{margin-bottom:1.3rem}
-.form-group label{display:block;font-size:0.72rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--gray);margin-bottom:0.5rem;font-weight:500}
-.form-group input,.form-group select,.form-group textarea{width:100%;font-family:"DM Sans",sans-serif;font-size:0.88rem;padding:0.85rem 1rem;border:1px solid rgba(0,0,0,0.12);background:var(--white);color:var(--black);outline:none;transition:border-color 0.2s;-webkit-appearance:none;border-radius:0}
-.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
-.form-group textarea{resize:vertical;min-height:110px;line-height:1.6}
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1.2rem}
-.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
-
-/* SERVICE SELECTOR */
-.service-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0.8rem;margin-top:0.5rem}
-.service-option{border:1px solid rgba(0,0,0,0.12);padding:1.2rem;cursor:pointer;transition:all 0.2s;position:relative}
-.service-option:hover{border-color:var(--gold)}
-.service-option.selected{border-color:var(--gold);background:rgba(201,168,76,0.05)}
-.service-option.selected::after{content:"✓";position:absolute;top:0.6rem;right:0.8rem;color:var(--gold);font-size:0.85rem;font-weight:600}
-.service-option input[type="checkbox"]{display:none}
-.service-icon-lg{font-size:1.5rem;margin-bottom:0.6rem}
-.service-name{font-size:0.85rem;font-weight:500;margin-bottom:0.2rem}
-.service-hint{font-size:0.72rem;color:var(--gray)}
-
-/* ROOM BUILDER */
-.room-builder{margin-top:0.5rem}
-.room-entry{display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:0.8rem;align-items:end;margin-bottom:0.8rem;padding:1rem;background:var(--cream)}
-.room-entry .form-group{margin-bottom:0}
-.room-entry label{font-size:0.65rem}
-.remove-room{background:none;border:1px solid rgba(0,0,0,0.12);color:var(--gray);width:36px;height:36px;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;align-self:end;transition:all 0.2s;flex-shrink:0;margin-bottom:0}
-.remove-room:hover{border-color:var(--red);color:var(--red)}
-.add-room-btn{display:flex;align-items:center;gap:0.5rem;background:none;border:1px dashed rgba(0,0,0,0.2);color:var(--gray);padding:0.7rem 1.2rem;cursor:pointer;font-family:"DM Sans",sans-serif;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;transition:all 0.2s;margin-top:0.4rem}
-.add-room-btn:hover{border-color:var(--gold);color:var(--gold)}
-.sqft-total{background:var(--dark);color:var(--white);padding:1rem 1.2rem;display:flex;justify-content:space-between;align-items:center;margin-top:0.8rem}
-.sqft-total span{font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:rgba(255,255,255,0.5)}
-.sqft-total strong{font-family:"Cormorant Garamond",serif;font-size:1.6rem;color:var(--gold)}
-
-/* PHOTO UPLOAD */
-.upload-zone{border:2px dashed rgba(0,0,0,0.15);padding:2.5rem;text-align:center;cursor:pointer;transition:all 0.2s;position:relative;background:var(--cream)}
-.upload-zone:hover,.upload-zone.dragover{border-color:var(--gold);background:rgba(201,168,76,0.04)}
-.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-icon{font-size:2rem;margin-bottom:0.8rem}
-.upload-title{font-size:0.85rem;font-weight:500;margin-bottom:0.3rem}
-.upload-hint{font-size:0.75rem;color:var(--gray)}
-.photo-previews{display:grid;grid-template-columns:repeat(4,1fr);gap:0.6rem;margin-top:1rem}
-.photo-thumb{position:relative;aspect-ratio:1;overflow:hidden;background:var(--cream)}
-.photo-thumb img{width:100%;height:100%;object-fit:cover}
-.photo-thumb button{position:absolute;top:0.2rem;right:0.2rem;background:rgba(0,0,0,0.6);color:white;border:none;width:20px;height:20px;cursor:pointer;font-size:0.7rem;display:flex;align-items:center;justify-content:center}
-
-/* NAV BUTTONS */
-.step-nav{display:flex;justify-content:space-between;align-items:center;margin-top:2.5rem;padding-top:2rem;border-top:1px solid rgba(0,0,0,0.08)}
-.btn-back{background:none;border:1px solid rgba(0,0,0,0.15);color:var(--black);padding:0.8rem 1.8rem;font-family:"DM Sans",sans-serif;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;cursor:pointer;transition:all 0.2s}
-.btn-back:hover{border-color:var(--black)}
-.btn-next{background:var(--black);color:var(--white);padding:0.85rem 2rem;font-family:"DM Sans",sans-serif;font-size:0.82rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:background 0.2s;display:flex;align-items:center;gap:0.5rem}
-.btn-next:hover{background:var(--gold);color:var(--black)}
-.btn-next:disabled{opacity:0.5;cursor:not-allowed}
-.btn-submit{background:var(--gold);color:var(--black);padding:0.9rem 2.2rem;font-family:"DM Sans",sans-serif;font-size:0.85rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;border:none;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:0.6rem}
-.btn-submit:hover{background:var(--gold-light)}
-.btn-submit:disabled{opacity:0.5;cursor:not-allowed}
-.spinner{width:16px;height:16px;border:2px solid rgba(0,0,0,0.2);border-top-color:#000;border-radius:50%;animation:spin 0.7s linear infinite;display:none}
-
-/* SUMMARY BOX */
-.summary-box{background:var(--cream);padding:1.5rem;margin-bottom:2rem}
-.summary-title{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--gold);margin-bottom:1rem;font-weight:500}
-.summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.8rem}
-.summary-item strong{display:block;font-size:0.72rem;color:var(--gray);letter-spacing:0.06em;text-transform:uppercase;margin-bottom:0.2rem}
-.summary-item span{font-size:0.88rem;color:var(--black)}
-
-/* SUCCESS */
-.success-screen{display:none;text-align:center;padding:4rem 2rem}
-.success-screen.visible{display:block;animation:fadeUp 0.5s forwards}
-.success-circle{width:80px;height:80px;background:rgba(39,174,96,0.1);border:2px solid rgba(39,174,96,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 1.5rem;font-size:2rem}
-.success-screen h2{font-family:"Cormorant Garamond",serif;font-size:2.5rem;font-weight:300;margin-bottom:0.6rem}
-.success-screen p{font-size:0.88rem;color:var(--gray);line-height:1.8;max-width:440px;margin:0 auto 2rem}
-.success-actions{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap}
-.success-actions a{padding:0.8rem 1.8rem;font-size:0.8rem;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;text-decoration:none}
-.btn-call{background:var(--black);color:var(--white)}
-.btn-wa{background:#25D366;color:var(--white)}
-
-/* ERROR */
-.field-error{font-size:0.72rem;color:var(--red);margin-top:0.3rem}
-.form-group input.error,.form-group select.error,.form-group textarea.error{border-color:var(--red)}
-
-/* FOOTER */
-footer{background:var(--black);padding:2rem 3rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
-.footer-logo{font-family:"Cormorant Garamond",serif;font-size:1.1rem;color:var(--white)}
-.footer-logo span{color:var(--gold)}
-footer p{font-size:0.72rem;color:rgba(255,255,255,0.25)}
-.wa-btn{position:fixed;bottom:2rem;right:2rem;width:52px;height:52px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;text-decoration:none;box-shadow:0 4px 20px rgba(37,211,102,0.4);z-index:200;transition:transform 0.2s}
-.wa-btn:hover{transform:scale(1.1)}
-.wa-btn svg{width:28px;height:28px;fill:white}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spin{to{transform:rotate(360deg)}}
-@media(max-width:900px){
-  nav{padding:1rem 1.5rem}
-  .page-header{grid-template-columns:1fr;padding:7rem 1.5rem 3rem;gap:2rem}
-  .steps-bar{justify-content:flex-start;padding:1.2rem 1.5rem}
-  .estimate-wrap{padding:2.5rem 1.2rem 4rem}
-  .form-row,.form-row-3{grid-template-columns:1fr}
-  .service-grid{grid-template-columns:1fr 1fr}
-  .room-entry{grid-template-columns:1fr 1fr;grid-template-rows:auto auto}
-  .photo-previews{grid-template-columns:repeat(3,1fr)}
-  .summary-grid{grid-template-columns:1fr}
-  footer{flex-direction:column;text-align:center;padding:1.5rem}
-}
-@media(max-width:480px){
-  .service-grid{grid-template-columns:1fr}
-  .photo-previews{grid-template-columns:repeat(2,1fr)}
-  .step-nav{flex-direction:column;gap:0.8rem}
-  .btn-next,.btn-back,.btn-submit{width:100%;justify-content:center}
-}
-
-.nav-logo-img{height:38px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
-@keyframes logoSlide{to{opacity:1;transform:translateX(0)}}
-</style>
+<link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
 <nav>
-  <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC"></a>
-  <a href="tel:+13859557472" class="nav-cta">📞 (385) 955-7472</a>
+  <a href="index.html" style="text-decoration:none"><img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgMjAwIiB3aWR0aD0iNjAwIiBoZWlnaHQ9IjIwMCI+CiAgPGRlZnM+CiAgICA8bGluZWFyR3JhZGllbnQgaWQ9ImczIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjEwMCUiIHkyPSIwJSI+CiAgICAgIDxzdG9wIG9mZnNldD0iMCUiIHN0eWxlPSJzdG9wLWNvbG9yOiNjOWE4NGMiLz4KICAgICAgPHN0b3Agb2Zmc2V0PSIxMDAlIiBzdHlsZT0ic3RvcC1jb2xvcjojZThkNWEzIi8+CiAgICA8L2xpbmVhckdyYWRpZW50PgogIDwvZGVmcz4KCiAgPCEtLSBCYWNrZ3JvdW5kIC0tPgogIDxyZWN0IHdpZHRoPSI2MDAiIGhlaWdodD0iMjAwIiBmaWxsPSIjMGEwYTBhIi8+CgogIDwhLS0gR29sZCBib3gg4oCUIHNpemVkIHRvIGZpdCBPUk0gcGVyZmVjdGx5IC0tPgogIDxyZWN0IHg9IjQwIiB5PSI0NSIgd2lkdGg9IjE2OCIgaGVpZ2h0PSI3MCIgZmlsbD0iI2M5YTg0YyIvPgoKICA8IS0tIE9STSBpbnNpZGUgYm94IGluIGJsYWNrIOKAlCBjZW50ZXJlZCBpbiBib3ggLS0+CiAgPHRleHQgeD0iNTQiIHk9IjEwMCIgZm9udC1mYW1pbHk9Ikdlb3JnaWEsIHNlcmlmIiBmb250LXNpemU9IjUwIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMiIgZmlsbD0iIzBhMGEwYSI+T1JNPC90ZXh0PgoKICA8IS0tIFZlcnRpY2FsIGdvbGQgZGl2aWRlciBsaW5lIC0tPgogIDxyZWN0IHg9IjIyMCIgeT0iNDUiIHdpZHRoPSIyIiBoZWlnaHQ9IjcwIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjM1Ii8+CgogIDwhLS0gRkxPT1JJTkcgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSI4NCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjIyIiBmb250LXdlaWdodD0iNzAwIiBsZXR0ZXItc3BhY2luZz0iMyIgZmlsbD0iI2ZmZmZmZiI+RkxPT1JJTkc8L3RleHQ+CgogIDwhLS0gJiBTRVJWSUNFUyBMTEMgLS0+CiAgPHRleHQgeD0iMjM4IiB5PSIxMDYiIGZvbnQtZmFtaWx5PSJBcmlhbCwgc2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMSIgZm9udC13ZWlnaHQ9IjMwMCIgbGV0dGVyLXNwYWNpbmc9IjYiIGZpbGw9InVybCgjZzMpIj4mYW1wOyBTRVJWSUNFUyBMTEM8L3RleHQ+CgogIDwhLS0gVW5kZXJsaW5lIGRldGFpbCAtLT4KICA8cmVjdCB4PSIyMzgiIHk9IjExMyIgd2lkdGg9IjIyNSIgaGVpZ2h0PSIxIiBmaWxsPSIjYzlhODRjIiBvcGFjaXR5PSIwLjMiLz4KCiAgPCEtLSBVdGFoIHRhZyAtLT4KICA8dGV4dCB4PSIyMzgiIHk9IjEzMCIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjkiIGxldHRlci1zcGFjaW5nPSI0IiBmaWxsPSIjOGE4ODgwIj5MSUNFTlNFRCAmYW1wOyBJTlNVUkVEIMK3IFVUQUg8L3RleHQ+CgogIDwhLS0gRmxvb3IgcGxhbmsgcGF0dGVybiByaWdodCAtLT4KICA8ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg1MDAsIDcyKSIgb3BhY2l0eT0iMC4zNSI+CiAgICA8cmVjdCB4PSIwIiB5PSIwIiAgd2lkdGg9IjY4IiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSIwIiB5PSIxMyIgd2lkdGg9IjQzIiBoZWlnaHQ9IjgiIHJ4PSIxIiBmaWxsPSIjYzlhODRjIi8+CiAgICA8cmVjdCB4PSI0OCIgeT0iMTMiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMCIgeT0iMjYiIHdpZHRoPSIyMCIgaGVpZ2h0PSI4IiByeD0iMSIgZmlsbD0iI2M5YTg0YyIvPgogICAgPHJlY3QgeD0iMjUiIHk9IjI2IiB3aWR0aD0iNDMiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICAgIDxyZWN0IHg9IjAiIHk9IjM5IiB3aWR0aD0iNjgiIGhlaWdodD0iOCIgcng9IjEiIGZpbGw9IiNjOWE4NGMiLz4KICA8L2c+Cjwvc3ZnPgo=" class="nav-logo-img" alt="ORM Flooring"></a>
+  <ul class="nav-links"><li><a href="index.html">Home</a></li><li><a href="gallery.html">Gallery</a></li><li><a href="estimate.html" class="active">Free Estimate</a></li><li><a href="contact.html">Contact</a></li></ul>
+  <div class="nav-right">
+    <a href="estimate.html" class="nav-cta">Free Estimate</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
 </nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="index.html">Home</a>
+  <a href="gallery.html">Gallery</a>
+  <a href="estimate.html">Free Estimate</a>
+  <a href="contact.html">Contact</a>
+  <a href="payments.html">Payments</a>
+  <a href="estimate.html" class="mobile-cta">Get Free Estimate</a>
+</div>
 
 <!-- HEADER -->
 <div class="page-header">
@@ -717,6 +573,11 @@ Final Notes: ${document.getElementById('s5-final').value || 'None'}
 
 // ─── INIT — add first room automatically ───
 addRoom();
+</script>
+<script>
+const hb=document.getElementById('hamburger'),mm=document.getElementById('mobileMenu');
+hb.addEventListener('click',function(){this.classList.toggle('open');mm.classList.toggle('open');document.body.style.overflow=mm.classList.contains('open')?'hidden':'';});
+mm.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}));
 </script>
 </body>
 </html>
