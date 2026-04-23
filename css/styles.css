@@ -26,7 +26,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--white);color:var(--black)
 @keyframes menuSlide{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
 
 /* ─── LOGO ─── */
-.nav-logo-img{height:55px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
+.nav-logo-img{height:65px;width:auto;display:block;opacity:0;transform:translateX(-32px);animation:logoSlide 0.7s cubic-bezier(0.22,1,0.36,1) 0.1s forwards}
 
 /* ─── NAV ─── */
 nav{position:fixed;top:0;width:100%;z-index:100;padding:1.2rem 3rem;display:flex;justify-content:space-between;align-items:center;background:rgba(250,250,248,0.95);backdrop-filter:blur(12px);border-bottom:1px solid rgba(0,0,0,0.06)}
