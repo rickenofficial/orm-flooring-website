@@ -370,6 +370,8 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
 @media(max-width:900px){
   nav{padding:1rem 1.5rem}
   .nav-links{display:none}
+  .nav-cta{display:none}
+  .nav-logo-img{height:65px}
   .hamburger{display:flex}
   .hero{grid-template-columns:1fr}
   .hero-right{display:none}
