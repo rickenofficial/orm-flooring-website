@@ -385,6 +385,8 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
   .contact-form-wrap{padding:3rem 1.5rem}
   .gallery-grid{grid-template-columns:1fr 1fr;gap:1rem}
   .filter-bar,.gallery-section,.cta-strip{padding:1.5rem}
+  .filter-bar{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:1rem}
+.filter-bar::-webkit-scrollbar{display:none}
   .form-row,.form-row-3{grid-template-columns:1fr}
   .photo-previews{grid-template-columns:repeat(3,1fr)}
   .summary-grid{grid-template-columns:1fr}
