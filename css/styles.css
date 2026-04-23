@@ -379,7 +379,7 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
   .services-grid{grid-template-columns:1fr 1fr}
   .why-grid{grid-template-columns:1fr}
   .testimonials-grid{grid-template-columns:1fr}
-  .page-header{grid-template-columns:1fr;padding:7rem 1.5rem 3rem}
+  .page-header{grid-template-columns:1fr;padding:9rem 1.5rem 3rem}
   .contact-section{grid-template-columns:1fr}
   .contact-info{padding:3rem 1.5rem}
   .contact-form-wrap{padding:3rem 1.5rem}
