@@ -146,23 +146,48 @@ pr.canMakePayment().then(result=>{
     document.getElementById('payment-request-btn-deposit').style.display='block';
   }
 });
+const pr=stripe.paymentRequest({
+  country:'US',
+  currency:'usd',
+  total:{label:'ORM Flooring Payment',amount:100},
+  requestPayerName:true,
+  requestPayerEmail:true,
+});
+const prButton=elements.create('paymentRequestButton',{paymentRequest:pr});
+pr.canMakePayment().then(result=>{
+  if(result){
+    prButton.mount('#payment-request-btn-deposit');
+    document.getElementById('payment-request-btn-deposit').style.display='block';
+    document.getElementById('payment-request-btn-balance').innerHTML='';
+    const prBtnClone=document.getElementById('payment-request-btn-deposit').cloneNode(true);
+    prBtnClone.id='payment-request-btn-balance-clone';
+    document.getElementById('payment-request-btn-balance').appendChild(prBtnClone);
+  }
+});
 pr.on('paymentmethod',async(ev)=>{
+  const isBalance=document.querySelector('[data-tab="balance"]').classList.contains('active');
+  const amount=isBalance?Math.round(balAmt*100):Math.round(depAmount*100);
+  const description=isBalance?'ORM Flooring Final Balance':'ORM Flooring 50% Deposit';
   const res=await fetch('/.netlify/functions/create-payment-intent',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({amount:Math.round(depAmount*100),currency:'usd',description:'ORM Flooring Deposit',receipt_email:ev.payerEmail})
+    body:JSON.stringify({amount,currency:'usd',description,receipt_email:ev.payerEmail})
   });
   const{clientSecret}=await res.json();
   const{error}=await stripe.confirmCardPayment(clientSecret,{payment_method:ev.paymentMethod.id},{handleActions:false});
   if(error){ev.complete('fail');}
-  else{ev.complete('success');document.getElementById('deposit-success-amount').textContent=fmt(depAmount);document.getElementById('deposit-success').classList.add('visible');document.getElementById('deposit-form-wrap').style.display='none';}
-});
-const prBalance=stripe.paymentRequest({
-  country:'US',
-  currency:'usd',
-  total:{label:'ORM Flooring Final Balance',amount:100},
-  requestPayerName:true,
-  requestPayerEmail:true,
+  else{
+    ev.complete('success');
+    if(isBalance){
+      document.getElementById('balance-success-amount').textContent=fmt(balAmt);
+      document.getElementById('balance-success').classList.add('visible');
+      document.getElementById('balance-form-wrap').style.display='none';
+    }else{
+      document.getElementById('deposit-success-amount').textContent=fmt(depAmount);
+      document.getElementById('deposit-success').classList.add('visible');
+      document.getElementById('deposit-form-wrap').style.display='none';
+    }
+  }
 });
 const prButtonBalance=elements.create('paymentRequestButton',{paymentRequest:prBalance});
 prBalance.canMakePayment().then(result=>{
