@@ -156,7 +156,7 @@ document.getElementById('dep-pay-btn').addEventListener('click',async function()
   if(!fname||!lname||!email||depAmount<=0){alert('Please fill in your name, email, and project amount.');return;}
   this.disabled=true;document.getElementById('dep-spinner').style.display='block';document.getElementById('dep-btn-label').textContent='Processing...';
   try{
-    const res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(depAmount*100),currency:'usd',description:'ORM Flooring 50% Deposit — '+fname+' '+lname,receipt_email:email})});
+    const res=await fetch('/.netlify/functions/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(depAmount*100),currency:'usd',description:'ORM Flooring 50% Deposit — '+fname+' '+lname,receipt_email:email})});
     const {clientSecret}=await res.json();
     const result=await stripe.confirmCardPayment(clientSecret,{payment_method:{card:cardDep,billing_details:{name:fname+' '+lname,email}}});
     if(result.error){document.getElementById('card-errors').textContent=result.error.message;}
@@ -190,7 +190,7 @@ document.getElementById('bal-pay-btn').addEventListener('click',async function()
   if(!fname||!lname||!email||balAmt<=0){alert('Please fill in your name, email, and balance amount.');return;}
   this.disabled=true;document.getElementById('bal-spinner').style.display='block';document.getElementById('bal-btn-label').textContent='Processing...';
   try{
-    const res=await fetch('/api/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(balAmt*100),currency:'usd',description:'ORM Flooring Final Balance — '+fname+' '+lname,receipt_email:email})});
+    const res=await fetch('/.netlify/functions/create-payment-intent',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:Math.round(balAmt*100),currency:'usd',description:'ORM Flooring Final Balance — '+fname+' '+lname,receipt_email:email})});
     const {clientSecret}=await res.json();
     const result=await stripe.confirmCardPayment(clientSecret,{payment_method:{card:cardBal,billing_details:{name:fname+' '+lname,email}}});
     if(result.error){document.getElementById('card-errors-balance').textContent=result.error.message;}
