@@ -113,7 +113,7 @@ hb.addEventListener('click',function(){this.classList.toggle('open');mm.classLis
 mm.querySelectorAll('a').forEach(l=>l.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}));
 </script>
 <script>
-const STRIPE_KEY='pk_live_YOUR_PUBLISHABLE_KEY_HERE';
+const STRIPE_KEY='pk_live_51TPQyy2VCLmaYVSqJXayX2CGh4QIZcaGfM0ymk0HYc9ilVjPneSBjsLoh1Y2qVA3d2L98z4WEC0FlVaXq7pViFtS00N8FohiZa_live_YOUR_PUBLISHABLE_KEY_HERE';
 const stripe=Stripe(STRIPE_KEY);
 const elements=stripe.elements();
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
