@@ -119,12 +119,17 @@ const STRIPE_KEY='pk_live_51TPQyy2VCLmaYVSqJXayX2CGh4QIZcaGfM0ymk0HYc9ilVjPneSBj
 const stripe=Stripe(STRIPE_KEY);
 const elements=stripe.elements();
 const fmt=n=>'$'+Number(n).toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
+let cardBalMounted=false;
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',function(){
     document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
     document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
     this.classList.add('active');
     document.getElementById('panel-'+this.dataset.tab).classList.add('active');
+    if(this.dataset.tab==='balance'&&!cardBalMounted){
+      cardBal.mount('#card-element-balance');
+      cardBalMounted=true;
+    }
   });
 });
 const pr=stripe.paymentRequest({
@@ -151,6 +156,31 @@ pr.on('paymentmethod',async(ev)=>{
   const{error}=await stripe.confirmCardPayment(clientSecret,{payment_method:ev.paymentMethod.id},{handleActions:false});
   if(error){ev.complete('fail');}
   else{ev.complete('success');document.getElementById('deposit-success-amount').textContent=fmt(depAmount);document.getElementById('deposit-success').classList.add('visible');document.getElementById('deposit-form-wrap').style.display='none';}
+});
+const prBalance=stripe.paymentRequest({
+  country:'US',
+  currency:'usd',
+  total:{label:'ORM Flooring Final Balance',amount:100},
+  requestPayerName:true,
+  requestPayerEmail:true,
+});
+const prButtonBalance=elements.create('paymentRequestButton',{paymentRequest:prBalance});
+prBalance.canMakePayment().then(result=>{
+  if(result){
+    prButtonBalance.mount('#payment-request-btn-balance');
+    document.getElementById('payment-request-btn-balance').style.display='block';
+  }
+});
+prBalance.on('paymentmethod',async(ev)=>{
+  const res=await fetch('/.netlify/functions/create-payment-intent',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({amount:Math.round(balAmt*100),currency:'usd',description:'ORM Flooring Final Balance',receipt_email:ev.payerEmail})
+  });
+  const{clientSecret}=await res.json();
+  const{error}=await stripe.confirmCardPayment(clientSecret,{payment_method:ev.paymentMethod.id},{handleActions:false});
+  if(error){ev.complete('fail');}
+  else{ev.complete('success');document.getElementById('balance-success-amount').textContent=fmt(balAmt);document.getElementById('balance-success').classList.add('visible');document.getElementById('balance-form-wrap').style.display='none';}
 });
 const cardDep=elements.create('card',{style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
 cardDep.mount('#card-element');
@@ -192,7 +222,7 @@ document.getElementById('dep-pay-btn').addEventListener('click',async function()
   this.disabled=false;document.getElementById('dep-spinner').style.display='none';
 });
 const cardBal=elements.create('card',{style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
-cardBal.mount('#card-element-balance');
+
 cardBal.on('change',e=>{document.getElementById('card-errors-balance').textContent=e.error?e.error.message:'';});
 let balAmt=0;
 document.getElementById('bal-amount').addEventListener('input',function(){
