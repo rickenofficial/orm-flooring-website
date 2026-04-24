@@ -64,6 +64,7 @@
         <div class="breakdown-row"><span class="breakdown-label">Remaining Balance</span><span class="breakdown-val" id="bd-remaining">—</span></div>
         <div class="breakdown-row total"><span class="breakdown-label">You Pay Now</span><span class="breakdown-val highlight" id="bd-now">—</span></div>
       </div>
+      <div id="payment-request-btn-deposit" style="margin-bottom:1rem"></div>
       <div class="section-divider"></div>
       <div class="card-section"><label>Card Details</label><div id="card-element"></div><div id="card-errors"></div></div>
       <button class="pay-btn" id="dep-pay-btn" disabled><span class="spinner" id="dep-spinner"></span><span id="dep-btn-label">Enter amount above to continue</span></button>
@@ -93,6 +94,7 @@
       <div class="amount-breakdown" id="bal-breakdown">
         <div class="breakdown-row total"><span class="breakdown-label">Final Balance Due</span><span class="breakdown-val highlight" id="bal-display">—</span></div>
       </div>
+      <div id="payment-request-btn-balance" style="margin-bottom:1rem"></div>
       <div class="section-divider"></div>
       <div class="card-section"><label>Card Details</label><div id="card-element-balance"></div><div id="card-errors-balance"></div></div>
       <button class="pay-btn" id="bal-pay-btn" disabled><span class="spinner" id="bal-spinner"></span><span id="bal-btn-label">Enter amount above to continue</span></button>
@@ -124,6 +126,31 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     this.classList.add('active');
     document.getElementById('panel-'+this.dataset.tab).classList.add('active');
   });
+});
+const pr=stripe.paymentRequest({
+  country:'US',
+  currency:'usd',
+  total:{label:'ORM Flooring Deposit',amount:100},
+  requestPayerName:true,
+  requestPayerEmail:true,
+});
+const prButton=elements.create('paymentRequestButton',{paymentRequest:pr});
+pr.canMakePayment().then(result=>{
+  if(result){
+    prButton.mount('#payment-request-btn-deposit');
+    document.getElementById('payment-request-btn-deposit').style.display='block';
+  }
+});
+pr.on('paymentmethod',async(ev)=>{
+  const res=await fetch('/.netlify/functions/create-payment-intent',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({amount:Math.round(depAmount*100),currency:'usd',description:'ORM Flooring Deposit',receipt_email:ev.payerEmail})
+  });
+  const{clientSecret}=await res.json();
+  const{error}=await stripe.confirmCardPayment(clientSecret,{payment_method:ev.paymentMethod.id},{handleActions:false});
+  if(error){ev.complete('fail');}
+  else{ev.complete('success');document.getElementById('deposit-success-amount').textContent=fmt(depAmount);document.getElementById('deposit-success').classList.add('visible');document.getElementById('deposit-form-wrap').style.display='none';}
 });
 const cardDep=elements.create('card',{style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
 cardDep.mount('#card-element');
