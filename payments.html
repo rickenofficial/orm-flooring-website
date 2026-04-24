@@ -130,7 +130,8 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
     this.classList.add('active');
     document.getElementById('panel-'+this.dataset.tab).classList.add('active');
     if(this.dataset.tab==='balance'&&!cardBalMounted){
-      cardBal=elements.create('card',{style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
+      const elementsBalance=stripe.elements();
+cardBal=elementsBalance.create('card',{style:{base:{fontFamily:'"DM Sans",sans-serif',fontSize:'16px',color:'#0a0a0a','::placeholder':{color:'#8a8880'}}}});
       cardBal.mount('#card-element-balance');
       cardBal.on('change',e=>{document.getElementById('card-errors-balance').textContent=e.error?e.error.message:'';});
       cardBalMounted=true;
