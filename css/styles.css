@@ -400,6 +400,10 @@ footer{background:var(--black);padding:3rem;display:grid;grid-template-columns:1
   .lightbox-prev{left:0.5rem}.lightbox-next{right:0.5rem}
   .trust-bar{gap:1.5rem;padding:1rem 1.5rem}
   .payment-wrap{padding:2.5rem 1.2rem 4rem}
+  /* ─── FOOTER ADMIN LINKS ─── */
+.footer-admin-links{display:flex;gap:1rem;align-items:center}
+.footer-admin-links a{font-size:0.65rem;color:rgba(255,255,255,0.15);text-decoration:none;letter-spacing:0.06em;text-transform:uppercase;transition:color 0.2s}
+.footer-admin-links a:hover{color:rgba(255,255,255,0.45)}
 }
 @media(max-width:600px){
   .gallery-grid{grid-template-columns:1fr}
