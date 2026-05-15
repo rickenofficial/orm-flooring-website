@@ -26,7 +26,7 @@
     return `
       <nav>
         <a href="index.html" style="text-decoration:none">
-          <img src="${LOGO_SRC}" class="nav-logo-img" alt="ORM Flooring &amp; Services LLC - Home">
+         <img src="${LOGO_SRC}" class="nav-logo-img" width="190" height="38" alt="ORM Flooring &amp; Services LLC - Home" width="190" height="38">
         </a>
         <ul class="nav-links">${links}</ul>
         <div class="nav-right">
@@ -61,7 +61,7 @@
         <footer>
           <div class="footer-brand">
             <a href="index.html" style="text-decoration:none">
-              <img src="${LOGO_SRC}" class="nav-logo-img" alt="ORM Flooring">
+              <img src="${LOGO_SRC}" class="nav-logo-img" width="190" height="38" alt="ORM Flooring">
             </a>
             <p>Licensed &amp; insured flooring contractor serving all of Utah. Residential &amp; commercial.</p>
           </div>
@@ -94,7 +94,7 @@
     return `
       <footer class="footer-mini">
         <a href="index.html" style="text-decoration:none">
-          <img src="${LOGO_SRC}" class="nav-logo-img" alt="ORM Flooring">
+          <img src="${LOGO_SRC}" class="nav-logo-img" width="190" height="38" alt="ORM Flooring">
         </a>
         <p>© 2026 ORM Flooring &amp; Services LLC — Licensed &amp; Insured — Utah</p>
         ${adminLinks}
